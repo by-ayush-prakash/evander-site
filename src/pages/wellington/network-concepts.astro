@@ -1,0 +1,568 @@
+---
+import Brand from "../../components/wellington/Brand.astro";
+import Base from "../../layouts/Base.astro";
+import "../../styles/network-concepts.css";
+const people = [
+  {
+    initials: "DH",
+    name: "David Hill",
+    work: "Quantum computing",
+    when: "Two weeks ago",
+    context: "Shared interests with Anne Griffin",
+    color: "rose",
+  },
+  {
+    initials: "AG",
+    name: "Anne Griffin",
+    work: "Quantum computing",
+    when: "Last week",
+    context: "A possible introduction to David",
+    color: "sage",
+  },
+  {
+    initials: "AR",
+    name: "Alex Rosalez",
+    work: "Research & investment",
+    when: "Three months ago",
+    context: "Your usual rhythm is 2–3 months",
+    color: "sand",
+  },
+  {
+    initials: "MC",
+    name: "Maya Chen",
+    work: "Biotech & biosecurity",
+    when: "Yesterday",
+    context: "Investor conversation tomorrow",
+    color: "blue",
+  },
+];
+---
+
+<Base
+  title="Wellington | Three Network directions"
+  description="Three illustrative ways to keep relationship context close in Wellington."
+  noindex={true}
+  cta={false}
+>
+  <div class="nc-page">
+    <header class="nc-intro wrap">
+      <h1>Network, reimagined.</h1>
+      <p>
+        Three ways to keep relationship context close, with less to remember yourself.
+      </p>
+      <nav aria-label="Compare Network concepts">
+        <a href="#relationship-desk">1. The relationship desk</a>
+        <a href="#living-map">2. The living map</a>
+        <a href="#next-move">3. The next move</a>
+      </nav>
+      <p class="nc-disclosure">
+        Design concepts with fictional people, history, and AI suggestions.
+        These are alternative interfaces, not screenshots of the current app.
+      </p>
+    </header>
+    <section class="nc-direction wrap" id="relationship-desk">
+      <div class="nc-direction-title">
+        <h2>1. The relationship desk</h2>
+        <p>
+          People first. A calm, useful overview with context one click away.
+        </p>
+      </div>
+      <div class="nc-mockup nc-desk" data-network-mockup="relationship-desk">
+        <header class="nc-app-header">
+          <span class="nc-wordmark">
+            <Brand /> <span>/ Network</span>
+          </span>
+          <span class="nc-owner">
+            Alex Morgan <i>AM</i>
+          </span>
+        </header>
+        <div class="nd-layout">
+          <main class="nd-main">
+            <div class="nd-heading">
+              <h3>
+                Good people.
+                <br />
+                Keep them close.
+              </h3>
+              <p>The context behind every connection.</p>
+            </div>
+            <label class="nd-search">
+              <svg
+                aria-hidden="true"
+                width="19"
+                height="19"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="8" cy="8" r="5" />
+                <path d="m12 12 5 5" />
+              </svg>
+              <input
+                type="search"
+                placeholder="Find a person or shared interest"
+                aria-label="Search the relationship desk"
+                data-person-search
+              />
+            </label>
+            <div
+              class="nd-list"
+              role="group"
+              aria-label="People in relationship desk"
+            >
+              {people.map((person, i) => (
+                <button
+                  type="button"
+
+                  class:list={["nd-person", { "is-selected": i === 0 }]}
+                  data-person-name={person.name}
+                  data-person-work={person.work}
+                  data-person-when={person.when}
+                  data-person-context={person.context}
+                  aria-pressed={i === 0 ? "true" : "false"}
+                >
+                  <span class={`nc-initials nc-initials--${person.color}`}>
+                    {person.initials}
+                  </span>
+                  <span class="nd-person-name">
+                    <strong>{person.name}</strong>
+                    <small>{person.work}</small>
+                  </span>
+                  <span class="nd-last-contact">{person.when}</span>
+                  <span class="nd-person-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </button>
+              ))}
+            </div>
+            <p class="nd-empty" hidden>
+              No matching people. Try “quantum” or “Alex”.
+            </p>
+            <div class="nd-bottom">
+              <span>4 people in this illustrative workspace</span>
+              <span>Every connection has a little history.</span>
+            </div>
+          </main>
+          <aside class="nd-context" aria-live="polite">
+            <div class="nd-profile">
+              <span class="nd-profile-mark" data-profile-initials>
+                DH
+              </span>
+              <h4 data-profile-name>David Hill</h4>
+              <p data-profile-work>Quantum computing</p>
+            </div>
+            <div class="nd-insight">
+              <span class="nc-spark" aria-hidden="true">
+                ✧
+              </span>
+              <h5>A connection worth making.</h5>
+              <p data-profile-context>Shared interests with Anne Griffin</p>
+              <details>
+                <summary>Review the suggestion</summary>
+                <p data-profile-detail>
+                  David and Anne Griffin both work in quantum computing. You could
+                  introduce them and let the conversation take its own course.
+                </p>
+              </details>
+            </div>
+            <div class="nd-history">
+              <h5>The relationship so far</h5>
+              <div>
+                <span></span>
+                <p>
+                  <strong>Last conversation</strong>
+                  <small data-profile-when>Two weeks ago</small>
+                </p>
+              </div>
+              <div>
+                <span></span>
+                <p>
+                  <strong>The context to remember</strong>
+                  <small data-profile-history>
+                    Quantum computing and people worth knowing.
+                  </small>
+                </p>
+              </div>
+            </div>
+            <p class="nc-concept-footer">
+              Illustrative concept. AI suggests; you decide.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <section class="nc-direction wrap" id="living-map">
+      <div class="nc-direction-title">
+        <h2>2. The living map</h2>
+        <p>
+          Connections first. See why people belong in the same conversation.
+        </p>
+      </div>
+      <div class="nc-mockup nc-map" data-network-mockup="living-map">
+        <header class="nc-app-header">
+          <span class="nc-wordmark">
+            <Brand /> <span>/ Network</span>
+          </span>
+          <span class="nc-owner">
+            Alex Morgan <i>AM</i>
+          </span>
+        </header>
+        <div class="nm-heading">
+          <h3>
+            A world of people.
+            <br />A few meaningful connections.
+          </h3>
+          <p>Select a person to explore their place in your network.</p>
+        </div>
+        <div class="nm-layout">
+          <div class="nm-canvas" aria-label="Illustrative relationship map">
+            <svg
+              class="nm-lines"
+              viewBox="0 0 800 500"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path d="M400 250 150 130M400 250 630 110M400 250 170 390M400 250 650 370M400 250 420 440" />
+              <path class="nm-overlap-line" d="M150 130 Q380 -5 630 110" />
+            </svg>
+            <span class="nm-overlap">Shared interest: quantum computing</span>
+            <div class="nm-you">
+              <span>AM</span>
+              <strong>You</strong>
+            </div>
+            {[
+              {
+                name: "David Hill",
+                initials: "DH",
+                x: 19,
+                y: 26,
+                context: "Quantum computing",
+                note: "David and Anne Griffin share an interest in quantum computing. This is a possible introduction for you to review.",
+              },
+              {
+                name: "Anne Griffin",
+                initials: "AG",
+                x: 79,
+                y: 22,
+                context: "Quantum computing",
+                note: "Anne Griffin and David Hill have a shared research interest. Consider introducing them.",
+              },
+              {
+                name: "Alex Rosalez",
+                initials: "AR",
+                x: 21,
+                y: 78,
+                context: "Time to reconnect",
+                note: "Your last conversation was three months ago. Your usual rhythm is every two to three months.",
+              },
+              {
+                name: "Maya Chen",
+                initials: "MC",
+                x: 81,
+                y: 74,
+                context: "Biotech & biosecurity",
+                note: "There is an investor conversation tomorrow. A research brief could help you prepare.",
+              },
+              {
+                name: "Jordan Ellis",
+                initials: "JE",
+                x: 53,
+                y: 88,
+                context: "Research collaboration",
+                note: "A fictional relationship in this sample workspace. Add your own context before deciding the next step.",
+              },
+            ].map((p, i) => (
+              <button
+                type="button"
+                class:list={["nm-node", { "is-selected": i === 0 }]}
+                style={`--node-x:${p.x}%;--node-y:${p.y}%`}
+                data-map-name={p.name}
+                data-map-context={p.context}
+                data-map-note={p.note}
+                aria-pressed={i === 0 ? "true" : "false"}
+              >
+                <span>{p.initials}</span>
+                <strong>{p.name}</strong>
+              </button>
+            ))}
+          </div>
+          <aside class="nm-detail" aria-live="polite">
+            <h4 data-map-title>David Hill</h4>
+            <p class="nm-topic" data-map-topic>
+              Quantum computing
+            </p>
+            <div class="nm-detail-rule"></div>
+            <h5>What Wellington noticed</h5>
+            <p data-map-description>
+              David and Anne Griffin share an interest in quantum computing. This
+              is a possible introduction for you to review.
+            </p>
+            <details>
+              <summary>Consider a next step</summary>
+              <p>
+                Review the people and their context. Decide whether an
+                introduction, follow-up, or a little preparation would be
+                useful.
+              </p>
+            </details>
+            <p class="nc-concept-footer">
+              Illustrative connections, not an inferred real network.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <section class="nc-direction wrap" id="next-move">
+      <div class="nc-direction-title">
+        <h2>3. The next move</h2>
+        <p>
+          Action first. A thoughtful relationship inbox, with the reasoning in
+          view.
+        </p>
+      </div>
+      <div class="nc-mockup nc-moves" data-network-mockup="next-move">
+        <header class="nc-app-header">
+          <span class="nc-wordmark">
+            <Brand /> <span>/ Network</span>
+          </span>
+          <span class="nc-owner">
+            Alex Morgan <i>AM</i>
+          </span>
+        </header>
+        <div class="nv-layout">
+          <aside class="nv-sidebar">
+            <h3>
+              Stay in touch.
+              <br />
+              Move things forward.
+            </h3>
+            <p>
+              A small number of useful next steps, drawn from the context of
+              your relationships.
+            </p>
+            <div class="nv-principle">
+              <span>Notice.</span>
+              <span>Understand.</span>
+              <span>Decide.</span>
+            </div>
+            <p class="nc-concept-footer">
+              Illustrative AI suggestions.
+              <br />
+              Nothing is sent automatically.
+            </p>
+          </aside>
+          <main class="nv-main">
+            <header>
+              <h4>A little attention goes a long way.</h4>
+              <p>Three suggestions. Your judgment.</p>
+            </header>
+            <div class="nv-notice" role="status" hidden>
+              <span>Suggestion set aside for this preview.</span>
+              <button type="button" data-undo>
+                Undo
+              </button>
+            </div>
+            <div class="nv-actions">
+              <article class="nv-action">
+                <div class="nv-action-top">
+                  <span class="nv-number">01</span>
+                  <span>Make an introduction</span>
+                  <button
+                    type="button"
+                    data-set-aside
+                    aria-label="Set aside the introduction suggestion"
+                  >
+                    Set aside
+                  </button>
+                </div>
+                <h5>David Hill + Anne Griffin</h5>
+                <p>
+                  Two people working in quantum computing. One introduction you
+                  might be glad you made.
+                </p>
+                <div class="nv-evidence">
+                  <span>Why this surfaced</span>
+                  <p>
+                    Shared research interests across their relationship context.
+                  </p>
+                </div>
+                <details>
+                  <summary>Review introduction draft</summary>
+                  <label for="network-intro">Your draft</label>
+                  <textarea id="network-intro" rows="5">David, Anne,
+
+You both work in quantum computing, and I thought there might be a useful conversation here. Would you be open to an introduction?</textarea>
+                  <small>Editable example. Nothing is sent or saved.</small>
+                </details>
+              </article>
+              <article class="nv-action">
+                <div class="nv-action-top">
+                  <span class="nv-number">02</span>
+                  <span>Pick up the conversation</span>
+                  <button
+                    type="button"
+                    data-set-aside
+                    aria-label="Set aside the follow-up suggestion"
+                  >
+                    Set aside
+                  </button>
+                </div>
+                <h5>It’s been three months, Alex.</h5>
+                <p>
+                  Your usual rhythm with Alex Rosalez is every two to three
+                  months. This could be a good moment to reconnect.
+                </p>
+                <div class="nv-evidence">
+                  <span>Why this surfaced</span>
+                  <p>
+                    A three-month gap against a typical two-to-three-month
+                    cadence.
+                  </p>
+                </div>
+                <details>
+                  <summary>Review follow-up draft</summary>
+                  <label for="network-followup">Your follow-up</label>
+                  <textarea id="network-followup" rows="4">Hi Alex,
+
+It’s been a little while. Would you have time to catch up next week?</textarea>
+                  <small>Editable example. Nothing is sent or saved.</small>
+                </details>
+              </article>
+              <article class="nv-action">
+                <div class="nv-action-top">
+                  <span class="nv-number">03</span>
+                  <span>Go in prepared</span>
+                  <button
+                    type="button"
+                    data-set-aside
+                    aria-label="Set aside the briefing suggestion"
+                  >
+                    Set aside
+                  </button>
+                </div>
+                <h5>Maya’s investor call is tomorrow.</h5>
+                <p>
+                  Bring the relationship context and the research into the same
+                  conversation.
+                </p>
+                <details>
+                  <summary>Review preparation outline</summary>
+                  <ul>
+                    <li>Read the recent conversation.</li>
+                    <li>Review the biotech and biosecurity evidence.</li>
+                    <li>
+                      Write down the questions that matter to these investors.
+                    </li>
+                  </ul>
+                  <p>
+                    This concept outlines preparation; it does not perform a
+                    live research task.
+                  </p>
+                </details>
+              </article>
+            </div>
+          </main>
+        </div>
+      </div>
+    </section>
+    <div class="nc-end wrap">
+      <p>Which should lead: the person, the connection, or the next step?</p>
+      <a href="/wellington/">Return to the Wellington page →</a>
+    </div>
+  </div>
+</Base>
+<script>
+  const search = document.querySelector<HTMLInputElement>(
+    "[data-person-search]",
+  );
+  const personButtons = [
+    ...document.querySelectorAll<HTMLButtonElement>("[data-person-name]"),
+  ];
+  search?.addEventListener("input", () => {
+    const query = search.value.trim().toLowerCase();
+    personButtons.forEach(
+      (b) =>
+        (b.hidden = !`${b.dataset.personName} ${b.dataset.personWork}`
+          .toLowerCase()
+          .includes(query)),
+    );
+    const empty = document.querySelector<HTMLElement>(".nd-empty");
+    if (empty) empty.hidden = personButtons.some((b) => !b.hidden);
+  });
+  personButtons.forEach((button) =>
+    button.addEventListener("click", () => {
+      personButtons.forEach((b) => {
+        b.classList.toggle("is-selected", b === button);
+        b.setAttribute("aria-pressed", String(b === button));
+      });
+      const fields: Record<string, string> = {
+        "profile-name": button.dataset.personName!,
+        "profile-work": button.dataset.personWork!,
+        "profile-when": button.dataset.personWhen!,
+        "profile-context": button.dataset.personContext!,
+        "profile-initials": button.querySelector(".nc-initials")!.textContent!,
+        "profile-history": button.dataset.personContext!,
+        "profile-detail":
+          button.dataset.personName === "Alex Rosalez"
+            ? "You usually reconnect every two to three months. Consider a follow-up, then choose the timing yourself."
+            : button.dataset.personName === "Maya Chen"
+              ? "Your next investor conversation is tomorrow. Bring the relationship context and a researched brief."
+              : "David and Anne Griffin both work in quantum computing. You could introduce them and let the conversation take its own course.",
+      };
+      Object.entries(fields).forEach(([key, value]) => {
+        const el = document.querySelector(`[data-${key}]`);
+        if (el) el.textContent = value;
+      });
+      const title = document.querySelector(".nd-insight h5");
+      if (title)
+        title.textContent =
+          button.dataset.personName === "Alex Rosalez"
+            ? "A good moment to reconnect."
+            : button.dataset.personName === "Maya Chen"
+              ? "Arrive with context."
+              : "A connection worth making.";
+    }),
+  );
+  const mapButtons = [
+    ...document.querySelectorAll<HTMLButtonElement>("[data-map-name]"),
+  ];
+  mapButtons.forEach((button) =>
+    button.addEventListener("click", () => {
+      mapButtons.forEach((b) => {
+        b.classList.toggle("is-selected", b === button);
+        b.setAttribute("aria-pressed", String(b === button));
+      });
+      for (const [selector, value] of [
+        ["[data-map-title]", button.dataset.mapName],
+        ["[data-map-topic]", button.dataset.mapContext],
+        ["[data-map-description]", button.dataset.mapNote],
+      ]) {
+        const el = document.querySelector(selector!);
+        if (el) el.textContent = value!;
+      }
+    }),
+  );
+  const notice = document.querySelector<HTMLElement>(".nv-notice");
+  let dismissed: HTMLElement | null = null;
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-set-aside]")
+    .forEach((button) =>
+      button.addEventListener("click", () => {
+        if (dismissed) dismissed.hidden = false;
+        dismissed = button.closest<HTMLElement>(".nv-action");
+        if (dismissed) dismissed.hidden = true;
+        if (notice) notice.hidden = false;
+        document.querySelector<HTMLButtonElement>("[data-undo]")?.focus();
+      }),
+    );
+  document
+    .querySelector<HTMLButtonElement>("[data-undo]")
+    ?.addEventListener("click", () => {
+      if (dismissed) {
+        dismissed.hidden = false;
+        dismissed.querySelector<HTMLButtonElement>("[data-set-aside]")?.focus();
+      }
+      dismissed = null;
+      if (notice) notice.hidden = true;
+    });
+</script>

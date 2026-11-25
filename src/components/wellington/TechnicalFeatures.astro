@@ -1,0 +1,62 @@
+---
+import NorthshireVisual from './NorthshireVisual.astro';
+import CompanionVisual from './CompanionVisual.astro';
+import EfficiencyVisual from './EfficiencyVisual.astro';
+import PolicyWorkflowVisual from './PolicyWorkflowVisual.astro';
+const integrations=[{name:'Gmail',icon:'gmail'},{name:'Google Calendar',icon:'google-calendar'},{name:'Google Drive',icon:'google-drive'},{name:'Outlook',icon:'microsoft-outlook'}];
+const providers=[{name:'OpenAI',icon:'openai'},{name:'Google Gemini',icon:'google-gemini'},{name:'Local model',icon:'local'}];
+---
+<section class="tf-section" aria-labelledby="tf-heading">
+  <header>
+    <h2 id="tf-heading">What control looks like</h2>
+    <p>These examples illustrate how Wellington is designed to assess proposed actions before they run, on user devices or in infrastructure the organization manages.</p>
+  </header>
+  <div class="tf-row">
+    <div class="tf-copy">
+      <h3>Keep routine work moving</h3>
+      <p>Teams should be able to delegate repetitive work and review individual exceptions. Wellington is designed to let eligible actions continue while isolating the decisions that need more evidence.</p>
+    </div>
+    <PolicyWorkflowVisual/>
+  </div>
+  <div class="tf-row tf-reverse">
+    <div class="tf-copy">
+      <h3>Set boundaries for autonomous work</h3>
+      <p>Teams define what agents have authority to do. Wellington is designed to assess how a proposed action could affect connected resources, even when the agent has permission to act.</p>
+    </div>
+    <NorthshireVisual/>
+  </div>
+  <div class="tf-row">
+    <div class="tf-copy">
+      <h3>Route changes for approval</h3>
+      <p>Teams can reserve consequential decisions for the people accountable for them. Wellington is designed to keep the approval and the execution outcome visible as separate events.</p>
+    </div>
+    <CompanionVisual/>
+  </div>
+  <div class="tf-row tf-reverse">
+    <div class="tf-copy">
+      <h3>Bring decisions to people while there’s time to act</h3>
+      <p>When circumstances change, people need to know which decisions can wait and which need their attention now. Wellington is designed to bring the responsible person a proposed next step and the facts needed to decide.</p>
+    </div>
+    <EfficiencyVisual/>
+  </div>
+</section>
+<style>
+.tf-section {
+  --flow-frame: 22px;
+  --flow-card: 9px;
+  --flow-icon: 6px;
+}
+@media (max-width: 700px) {
+  .tf-section { --flow-frame: 16px; }
+}
+
+.tf-section{width:calc(100% - 80px);max-width:1880px;margin:0 auto;padding:64px 0 96px;color:#242722;font-family:var(--sans)}.tf-section *{box-sizing:border-box}.tf-section>header{text-align:center;margin-bottom:72px}.tf-section h2{font-size:clamp(36px,4.2vw,60px);line-height:1.08;letter-spacing:-.035em;font-weight:400;margin:0;text-wrap:balance}.tf-section>header p{font-size:20px;line-height:1.5;max-width:68ch;margin:20px auto 0}.tf-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6%;align-items:center;margin-top:64px}.tf-copy h3{font-size:38px;line-height:1.15;letter-spacing:-.035em;font-weight:400;margin:0;text-wrap:balance}.tf-copy p{font-size:20px;line-height:1.5;margin:22px 0 0}.tf-reverse .tf-art,.tf-reverse :global(.np),.tf-reverse :global(.efficiency-visual){grid-column:1;grid-row:1}.tf-reverse .tf-copy{grid-column:2}.tf-art{width:100%;min-width:0;aspect-ratio:1;margin:0;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(155deg,#061e13,#245035 65%,#7d793d);border-radius:24px;overflow:hidden;padding:40px;color:#f7f8f2}.tf-art img{display:block;object-fit:contain}.tf-logo-rail{position:absolute;left:0;top:10%;bottom:10%;display:grid;gap:10px;width:18%;transform:perspective(500px) rotateY(15deg)}.tf-logo-rail>div{display:grid;place-items:center;border-radius:0 13px 13px 0;background:#f7f8f3}.tf-logo-rail img{width:34%;height:44%}.tf-connections{position:relative;width:67%;margin-left:14%;padding:22px 18px;background:#f7f8f3;border:1px solid #c5d1b8;border-radius:10px;color:#293127;z-index:1}.tf-connections h4{font-size:15px;font-weight:400;line-height:1.3;margin:0 0 18px;padding-bottom:14px;border-bottom:1px solid #c5d1b8}.tf-connections>div{display:flex;align-items:center;gap:9px;min-height:46px;padding:10px 8px;border:1px solid #d0d9c8;border-radius:5px;font-size:13px;margin-top:9px}.tf-connections img{width:22px;height:22px;flex:none}.tf-connections>div>span:nth-child(2){flex:1;min-width:0}.tf-dot{height:5px;width:5px;border-radius:50%;background:#526c46;flex:none}.tf-wire{width:13%;height:1px;background:#d6e1c2;position:absolute;right:1%;top:50%}.tf-wellington{position:absolute;right:-3%;top:39%;width:17%;height:22%;border:1px solid #c5d1b8;border-radius:12px;background:#f7f8f3;display:grid;place-items:center}.tf-wellington img{width:55%;height:55%}.tf-workflow{width:85%;display:flex;flex-direction:column;align-items:center}.tf-node{display:flex;align-items:center;gap:14px;min-height:65px;width:100%;padding:17px 20px;background:#f7f8f21a;border:1px solid #d5e0c66b;border-radius:10px;font-size:18px;line-height:1.3}.tf-node>img{width:27px;height:27px;background:#f7f8f3;border-radius:5px;padding:3px}.tf-node>svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.3;flex:none}.tf-vertical{height:27px;width:1px;background:#d4dfc4a6;flex:none}.tf-tool-branch{width:100%;display:flex;flex-direction:column;align-items:center}.tf-tool-branch>span{height:25px;width:1px;background:#d4dfc4a6}.tf-tool-branch>div{width:82%;display:flex;justify-content:space-between;border-top:1px solid #d4dfc4a6;padding-top:25px;position:relative}.tf-tool{position:relative;width:54px;height:58px;border:4px solid #b0c59b7a;background:#f7f8f3;border-radius:9px;display:grid;place-items:center}.tf-tool:before{content:'';position:absolute;bottom:calc(100% + 4px);height:25px;width:1px;background:#d4dfc4a6}.tf-tool img{width:27px;height:27px}.tf-atlas{background:#f7f8f3;color:#293127;border-color:#c5d1b8}.tf-provider-list{display:grid;gap:20px;width:55%;position:relative;z-index:1}.tf-provider-list>div{display:flex;align-items:center;gap:15px;background:#f7f8f3;border:4px solid #b0c59b7a;border-radius:10px;padding:16px 18px;color:#293127;font-size:17px;min-height:73px}.tf-provider-list img{height:29px;width:29px;flex:none}.tf-model-destination{width:25%;aspect-ratio:1;background:#f7f8f3;border:5px solid #b0c59b7a;border-radius:14px;margin-left:16%;display:grid;place-items:center;position:relative;z-index:1}.tf-model-destination img{width:58%;height:58%}.tf-model-wires{position:absolute;inset:23% 21% 23% 48%;display:flex;flex-direction:column;justify-content:space-between}.tf-model-wires>span{width:100%;height:33.33%;border-right:1px solid #d4dfc4a6}.tf-model-wires>span:first-child{border-top:1px solid #d4dfc4a6}.tf-model-wires>span:nth-child(2){height:0;border-top:1px solid #d4dfc4a6}.tf-model-wires>span:last-child{border-bottom:1px solid #d4dfc4a6}
+@media(min-width:701px) and (max-width:1100px){.tf-art{padding:24px}.tf-copy h3{font-size:30px}.tf-copy p{font-size:18px}.tf-node{font-size:15px;padding:12px;min-height:52px}.tf-connections{padding:15px 10px;width:75%;margin-left:19%}.tf-connections>div{font-size:10px;gap:5px;padding:8px 5px;min-height:36px}.tf-connections img{width:18px;height:18px}.tf-provider-list{width:65%}.tf-provider-list>div{font-size:13px;gap:8px;padding:12px 9px;min-height:60px}.tf-provider-list img{width:22px;height:22px}.tf-model-destination{margin-left:10%;width:25%}}
+@media(max-width:700px){.tf-section{width:calc(100% - 40px);padding:56px 0}.tf-section>header{margin-bottom:36px}.tf-section h2{font-size:34px}.tf-section>header p{font-size:16px;margin-top:16px}.tf-row{grid-template-columns:1fr;gap:26px;margin-top:48px}.tf-copy h3{font-size:28px}.tf-copy p{font-size:17px;margin-top:16px}.tf-reverse .tf-copy,.tf-reverse .tf-art,.tf-reverse :global(.np),.tf-reverse :global(.efficiency-visual){grid-column:auto;grid-row:auto}.tf-art{padding:23px;border-radius:16px;min-height:310px}.tf-connections{padding:17px 12px;width:74%;margin-left:16%}.tf-connections>div{font-size:11px;gap:6px;padding:9px 6px;min-height:37px}.tf-connections h4{font-size:13px;margin-bottom:12px;padding-bottom:12px}.tf-connections img{width:20px;height:20px}.tf-node{font-size:15px;min-height:50px;padding:12px}.tf-workflow{width:94%}.tf-tool{width:43px;height:47px}.tf-tool img{width:24px;height:24px}.tf-vertical{height:20px}.tf-tool-branch>span{height:20px}.tf-tool-branch>div{padding-top:20px}.tf-tool:before{height:20px}.tf-provider-list{width:65%;gap:14px}.tf-provider-list>div{font-size:13px;gap:8px;padding:12px 9px;min-height:62px}.tf-provider-list img{width:24px;height:24px}.tf-model-destination{width:25%;margin-left:10%}}
+.tf-model-benefits{list-style:none;padding:0;margin:32px 0 0;display:grid;gap:18px}.tf-model-benefits li{position:relative;padding-left:27px;font-size:18px;line-height:1.5}.tf-model-benefits li:before{content:'✓';position:absolute;left:0;top:5px;width:16px;height:16px;display:grid;place-items:center;border:1.5px solid currentColor;border-radius:50%;font-size:11px;line-height:1}@media(max-width:700px){.tf-model-row{grid-template-columns:minmax(0,1fr);gap:32px}.tf-model-benefits{margin-top:24px}.tf-model-benefits li{font-size:17px}}
+.tf-copy{width:100%;min-width:0}.tf-copy p,.tf-model-benefits li{max-width:none;width:100%;letter-spacing:normal;word-spacing:normal;line-height:1.4;text-wrap:wrap;text-align:left}.tf-copy p{font-size:20px}@media(max-width:1100px){.tf-copy p{font-size:18px}}@media(max-width:700px){.tf-copy p{font-size:17px}}
+@media (max-width: 1000px) {
+  .tf-row{grid-template-columns:minmax(0,640px);justify-content:center;gap:26px}
+  .tf-reverse .tf-copy,.tf-reverse :global(.np),.tf-reverse :global(.efficiency-visual){grid-column:auto;grid-row:auto}
+}
+</style>

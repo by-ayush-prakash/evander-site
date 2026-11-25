@@ -1,0 +1,50 @@
+---
+import WhyExample from "./WhyExample.astro";
+const reasons: {title:string;kind:"mail"|"network"|"calendar"|"connections"}[] = [
+  { title:"Know what needs a reply.",kind:"mail" },
+  { title:"Pick up where you left off.",kind:"network" },
+  { title:"See your week before saying yes.",kind:"calendar" },
+  { title:"Connect the tools you already use.",kind:"connections" },
+];
+---
+<section data-page-section="capabilities" class="w-why w-context-section" aria-labelledby="why-heading">
+  <div class="wrap">
+    <div class="w-why-section-intro">
+    <h2 id="why-heading" class="w-section-title w-why-heading" data-w-reveal>Mail. Calendar. People.<br/><span>Working together.</span></h2>
+    <p class="w-why-intro">A request lands in your inbox. The deadline is in your calendar. The details are in your notes. Wellington brings the information you connect and save together, so you can see what needs attention and prepare the next step with the rest of your life in mind.</p>
+    </div>
+    <div class="w-why-list" data-w-reveal>
+      {reasons.map((reason,index) => <details name="why-wellington" open={index===0}>
+        <summary>{reason.title}<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+        <div class="w-faq-answer">
+          <div class="w-why-preview">
+            <WhyExample kind={reason.kind}/>
+          </div>
+        </div>
+      </details>)}
+    </div>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>(".w-why-list").forEach(list=>{
+    const desktop=matchMedia("(min-width:901px)");
+    function fitPreview(){
+      if(!desktop.matches){list.style.removeProperty("min-height");return;}
+      const active=list.querySelector<HTMLElement>('details[data-expanded="true"] .w-mini-thread, details[open]:not([data-expanded]) .w-mini-thread');
+      if(!active)return;
+      const preview=active.closest<HTMLElement>(".w-why-preview")!;
+      const style=getComputedStyle(preview);
+      const previewHeight=active.getBoundingClientRect().height+parseFloat(style.paddingTop)+parseFloat(style.paddingBottom);
+      const summaries=[...list.querySelectorAll<HTMLElement>("summary")];
+      const controlsHeight=summaries.reduce((height,summary)=>height+summary.getBoundingClientRect().height+parseFloat(getComputedStyle(summary).marginBottom),40);
+      list.style.minHeight=`${Math.ceil(Math.max(540,previewHeight,controlsHeight))}px`;
+    }
+    const observer=new ResizeObserver(fitPreview);
+    list.querySelectorAll<HTMLElement>(".w-mini-thread, summary").forEach(element=>observer.observe(element));
+    list.addEventListener("toggle",fitPreview,true);
+    list.addEventListener("click",()=>queueMicrotask(fitPreview));
+    window.addEventListener("resize",fitPreview);
+    document.fonts.ready.then(fitPreview);
+    fitPreview();
+  });
+</script>

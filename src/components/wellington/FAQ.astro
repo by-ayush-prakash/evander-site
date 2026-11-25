@@ -1,0 +1,112 @@
+---
+interface Question { question: string; answer: string; href?: string; link?: string; }
+interface Props { id?: string; heading?: string; questions?: Question[]; }
+const defaults: Question[] = [
+  { question: "What is Wellington?", answer: "Wellington is a personal AI workspace for your mail, calendar, projects and relationships. It brings relevant context together to help you decide what to do next and prepare the work, with a web app and a desktop companion." },
+  { question: "What can Wellington help me do?", answer: "Plan around existing commitments, prepare replies, pick up a conversation and keep useful project or relationship notes in view. These workflows are being developed and tested in the alpha. The examples on this page use fictional data." },
+  { question: "How does Wellington understand my context?", answer: "Wellington brings relevant information from supported accounts together with the notes and preferences you save. It uses those connections to help you plan around commitments and prepare useful next steps. Its understanding depends on the information available to it." },
+  { question: "What is Sapiens?", answer: "Sapiens is the action-checking system we’re developing alongside Wellington. The goal is to check proposed actions against your instructions, granted permissions and relevant facts before tools carry them out. The integration is in development; sending messages and changing calendars still require your confirmation.", href: "/wellington/governance/", link: "Explore governance" },
+  { question: "Which apps can I connect?", answer: "Gmail and Google Calendar are the starting connections for the alpha. Other connections are planned; the app logos on this page illustrate the broader direction, rather than a list of integrations available at launch." },
+  { question: "What does Wellington remember?", answer: "The preferences, routines and context you choose to save. You can review, correct or remove them. A temporary instruction, such as keeping one evening free, should not become a permanent preference without your approval." },
+  { question: "Can I change Wellington by asking it?", answer: "Selected app settings can already be changed through conversation. We’re developing broader workspace customization, such as choosing what appears at the top of Home. This does not mean every part of the app can currently rewrite itself." },
+  { question: "Will Wellington send messages or change my calendar?", answer: "Sending messages and changing calendar events require your confirmation. A prepared reply stays a draft, and a suggested schedule stays a proposal, until you choose to act." },
+  { question: "How is my information used?", answer: "You choose which supported accounts to connect and what context to save. Relevant context may be sent to an AI provider when you use AI features. You can manage saved context and account connections in Settings.", href: "https://innovatingfuture.com/privacy/", link: "Read the privacy policy" },
+  { question: "When can I use Wellington?", answer: "Wellington is in internal testing as we prepare the private alpha. Leave your email for availability updates. Joining the list does not create an account or give immediate access." },
+];
+const { id = "w-faq", heading, questions = defaults } = Astro.props;
+---
+<section class="w-faq" id={id} aria-labelledby={`${id}-heading`}>
+  <div class="wrap w-faq-layout">
+    <h2 id={`${id}-heading`}>{heading ?? <>Frequently asked<br />questions.</>}</h2>
+    <div class="w-faq-list">
+      {questions.map(({question, answer, href, link}) => (
+        <details name={`${id}-group`}>
+          <summary>{question}<svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="m5 7 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg></summary>
+          <div class="w-faq-answer"><p>{answer}</p>{href && <a href={href}>{link}</a>}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+.w-faq{background:#fafaf7;border-top:1px solid #ddded7;border-bottom:1px solid #ddded7}.w-faq-layout{display:grid;grid-template-columns:2fr 3fr;gap:6%}.w-faq h2{font-size:clamp(36px,4.3vw,64px);line-height:1.06;letter-spacing:-.045em;margin:55px 0}.w-faq-list{border-left:1px solid #ddded7}.w-faq details{border-bottom:1px solid #ddded7}.w-faq details:last-child{border-bottom:0}.w-faq summary{display:flex;justify-content:space-between;align-items:center;gap:25px;list-style:none;cursor:pointer;font-size:clamp(18px,1.65vw,25px);line-height:1.35;letter-spacing:-.025em;padding:30px 0 30px 35px;color:#242720}.w-faq summary::-webkit-details-marker{display:none}.w-faq summary svg{flex-shrink:0;transition:transform .2s}.w-faq details[data-expanded="true"] summary svg,.w-faq details[open]:not([data-expanded]) summary svg{transform:rotate(180deg)}.w-faq details[data-expanded="true"] summary,.w-faq details[open]:not([data-expanded]) summary{color:#b7242b}.w-faq details p{font-size:16px;line-height:1.75;color:#53594e;margin:0;padding:0 35px 30px}.w-faq summary:focus-visible{outline:2px solid #667c54;outline-offset:-3px}@media(max-width:700px){.w-faq-layout{display:block}.w-faq h2{margin:40px 0}.w-faq-list{border-left:0;border-top:1px solid #ddded7}.w-faq summary{padding:23px 0}.w-faq details p{padding:0 20px 25px 0;font-size:15px}}@media(prefers-reduced-motion:reduce){.w-faq summary svg{transition:none}}
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".w-faq-list, .w-why-list, .w-demo-disclosures").forEach((list) => {
+    const items = [...list.querySelectorAll<HTMLDetailsElement>("details")];
+    const keepOneOpen = list.classList.contains("w-why-list");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const running = new Map<HTMLDetailsElement, { height: Animation; content: Animation }>();
+
+    function setExpanded(item: HTMLDetailsElement, expanded: boolean) {
+      const summary = item.querySelector("summary");
+      const answer = item.querySelector<HTMLElement>(".w-faq-answer");
+      if (!summary || !answer) return;
+      if (keepOneOpen) summary.setAttribute("aria-disabled", String(expanded));
+      const wasOpen = item.open;
+      const startHeight = item.getBoundingClientRect().height;
+      const startOpacity = wasOpen ? Number(getComputedStyle(answer).opacity) : 0;
+      const previous = running.get(item);
+      previous?.height.cancel();
+      previous?.content.cancel();
+      running.delete(item);
+      item.dataset.expanded = String(expanded);
+
+      // Feature previews replace one another; accordion height/fade animations
+      // leave two absolute previews visible and disturb container measurements.
+      if (keepOneOpen || reducedMotion.matches) {
+        item.open = expanded;
+        item.style.removeProperty("overflow");
+        return;
+      }
+      // Keep the answer rendered until the closing animation has finished.
+      item.open = true;
+      const style = getComputedStyle(item);
+      const border = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+      const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      const summaryStyle = getComputedStyle(summary);
+      const summaryMargins = parseFloat(summaryStyle.marginTop) + parseFloat(summaryStyle.marginBottom);
+      const endHeight = expanded
+        ? item.getBoundingClientRect().height
+        : summary.getBoundingClientRect().height + border + padding + summaryMargins;
+      item.style.overflow = "hidden";
+      const height = item.animate(
+        { height: [`${startHeight}px`, `${endHeight}px`] },
+        { duration: 280, easing: "cubic-bezier(.22, 1, .36, 1)" },
+      );
+      const content = answer.animate(
+        { opacity: [startOpacity, expanded ? 1 : 0] },
+        { duration: expanded ? 240 : 180, fill: "forwards", easing: "ease-out" },
+      );
+      running.set(item, { height, content });
+      height.onfinish = () => {
+        if (running.get(item)?.height !== height) return;
+        item.open = expanded;
+        item.style.removeProperty("overflow");
+        content.cancel();
+        running.delete(item);
+      };
+    }
+
+    items.forEach((item) => {
+      // Native exclusivity remains available without JavaScript. With JavaScript,
+      // manage it here so the previous answer can animate closed as well.
+      item.removeAttribute("name");
+      item.dataset.expanded = String(item.open);
+      if (keepOneOpen) item.querySelector("summary")?.setAttribute("aria-disabled", String(item.open));
+      item.querySelector("summary")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        const expanded = item.dataset.expanded !== "true";
+        // The reason selector always has a corresponding example in view.
+        if (keepOneOpen && !expanded) return;
+        if (expanded) {
+          items.forEach((other) => {
+            if (other !== item && other.dataset.expanded === "true") setExpanded(other, false);
+          });
+        }
+        setExpanded(item, expanded);
+      });
+    });
+  });
+</script>

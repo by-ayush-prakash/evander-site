@@ -1,0 +1,111 @@
+---
+const days=[{name:"Wednesday",short:"Wed",date:18},{name:"Thursday",short:"Thu",date:19},{name:"Friday",short:"Fri",date:20}];
+const fixed=[
+ {day:19,title:"Client deadline",time:"12 pm",start:2,length:1,kind:"deadline"},
+ {day:19,title:"School pickup",time:"1–3 pm",start:3,length:2,kind:"fixed"},
+ {day:20,title:"Proposal due",time:"3 pm",start:5,length:1,kind:"deadline"},
+];
+const before=[
+ {day:17,title:"Proposal",time:"10 am–12 pm",start:0,length:2,kind:"existing"},
+ {day:18,title:"Research",time:"10 am–12 pm",start:0,length:2,kind:"existing"},
+ {day:19,title:"Proposal",time:"1–3 pm · Conflict",start:3,length:2,kind:"conflict"},
+ {day:20,title:"Proposal",time:"10 am–12 pm",start:0,length:2,kind:"existing"},
+ {day:20,title:"Admin",time:"1–3 pm",start:3,length:2,kind:"existing"},
+];
+const after=[
+ {day:17,title:"Proposal",time:"10 am–12 pm",start:0,length:2,kind:"existing"},
+ {day:18,title:"Proposal",time:"10 am–12 pm · Suggested",start:0,length:2,kind:"suggested"},
+ {day:20,title:"Proposal",time:"10 am–12 pm",start:0,length:2,kind:"existing"},
+ {day:20,title:"Admin",time:"1–3 pm",start:3,length:2,kind:"existing"},
+ {day:23,title:"Research",time:"1–3 pm · Suggested",start:3,length:2,kind:"suggested"},
+];
+const states=[{title:"Current week",events:before},{title:"Suggested plan",events:after}];
+---
+<div class="w-week-comparison" data-week-comparison>
+ <div class="w-week-controls" hidden>
+  <button type="button" data-week-step="0" class="wc-action wc-action-secondary" aria-controls="week-comparison-track" aria-pressed="true">← Current week</button>
+  <button type="button" data-week-step="1" class="wc-action wc-action-secondary" aria-controls="week-comparison-track" aria-pressed="false">Suggested plan →</button>
+ </div>
+ <div class="w-week-track" id="week-comparison-track" tabindex="0" role="region" aria-label="Current week and suggested plan. Scroll horizontally to compare.">
+ {states.map((state,index)=><section class="wc-evidence w-week-slide" aria-labelledby={`week-state-${index}`}>
+  <div class="w-week-toolbar"><h3 id={`week-state-${index}`}>{state.title}</h3><span>Nov 18–23</span></div>
+  <div class="w-week-grid">
+   <div class="w-week-hours" aria-hidden="true"><div></div>{["10 am","11 am","12 pm","1 pm","2 pm","3 pm"].map(hour=><span>{hour}</span>)}</div>
+   {days.map(day=><div class:list={["w-week-day",{"w-week-next":day.date===23}]}>
+    <div class="w-week-date"><span>{day.short}</span><strong>{day.date}</strong></div>
+    <div class="w-week-events">
+     {[...fixed,...state.events].filter(event=>event.day===day.date).sort((a,b)=>a.start-b.start).map(event=><div class:list={["w-week-event",`w-week-event-${event.kind}`,{"w-week-overlap":index===0&&day.date===19&&event.start===3}]} style={`--start:${event.start};--length:${event.length}`}>
+      <strong>{event.title}</strong><span>{event.time}</span>
+     </div>)}
+    </div>
+   </div>)}
+  </div>
+  <div class="w-week-monday"><strong>Mon 23</strong>{index===0 ? <span>10 am–12 pm and 1–3 pm available</span> : <div><span class="w-week-carried">Research · 1–3 pm</span></div>}</div>
+ </section>)}
+ </div>
+</div>
+<style is:global>
+.w-week-comparison { min-width:0; container-type:inline-size; }
+.w-week-controls { display:flex; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.w-week-controls[hidden] { display:none; }
+.we-page .w-week-controls .wc-action { min-height:44px; cursor:pointer; padding:10px 16px; }
+.we-page .w-week-controls [aria-pressed="true"] { background:var(--wc-action); border-color:var(--wc-action); color:white; }
+.w-week-track { display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; overscroll-behavior-x:contain; scrollbar-width:thin; scrollbar-color:#8da27a transparent; padding-bottom:12px; }
+.w-week-track:focus-visible { outline:2px solid var(--wc-action); outline-offset:4px; }
+.w-week-slide { flex:0 0 100%; min-width:0; scroll-snap-align:start; scroll-snap-stop:always; overflow:hidden; }
+.w-week-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 12px; border-bottom:1px solid var(--wc-line); }
+.w-week-toolbar h3 { font-size:17px; font-weight:400; margin:0; letter-spacing:-.025em; }
+.w-week-toolbar>span { color:var(--wc-muted); font-size:12px; }
+.w-week-grid { --hour:35px; --head:40px; display:grid; grid-template-columns:38px repeat(3,minmax(0,1fr)); }
+.w-week-hours { display:grid; grid-template-rows:var(--head) repeat(6,var(--hour)); color:var(--wc-muted); font-size:11px; text-align:right; }
+.w-week-hours span { padding:5px 6px 0 0; }
+.w-week-day { min-width:0; border-left:1px solid var(--wc-line); }
+.w-week-next { border-left:3px solid var(--wc-line); }
+.w-week-date { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; height:var(--head); border-bottom:1px solid var(--wc-line); color:var(--wc-muted); font-size:13px; }
+.w-week-date strong { font-size:17px; font-weight:400; color:var(--wc-ink); }
+.w-week-events { position:relative; height:calc(6 * var(--hour)); background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--hour) - 1px),#e3e8dc calc(var(--hour) - 1px),#e3e8dc var(--hour)); }
+.w-week-event { position:absolute; top:calc(var(--start) * var(--hour) + 3px); height:calc(var(--length) * var(--hour) - 6px); inset-inline:4px; padding:6px 5px; border-radius:4px; display:flex; flex-direction:column; gap:3px; color:var(--wc-muted); background:#f0f1ec; border-left:3px solid #8da27a; overflow-wrap:anywhere; font-size:11px; line-height:1.35; }
+.w-week-event strong { color:var(--wc-ink); font-weight:500; font-size:12px; }
+.w-week-event-suggested { background:var(--wc-tint); border:1px dashed var(--wc-action); border-left:3px solid var(--wc-action); }
+.w-week-event-conflict { background:#f9e9e7; border-color:#b7242b; }
+.w-week-event-deadline { background:transparent; border-left:0; border-top:2px solid #8da27a; padding:4px; font-size:11px; gap:4px; flex-direction:row; justify-content:space-between; align-items:baseline; height:auto; }
+.w-week-event-deadline strong { font-size:11px; }
+.w-week-overlap { right:51%; }
+.w-week-event-fixed.w-week-overlap { right:4px; left:51%; }
+.w-week-available { display:block; padding:16px 10px; color:var(--wc-muted); font-size:12px; }
+ .w-week-monday { display:grid; grid-template-columns:48px minmax(0,1fr); gap:10px; padding:10px 12px; border-top:1px solid var(--wc-line); font-size:12px; line-height:1.5; color:var(--wc-muted); }
+.w-week-monday>strong { font-weight:400; color:var(--wc-ink); }
+.w-week-monday>div { display:flex; flex-wrap:wrap; gap:4px 14px; }
+.w-week-carried { display:block; }
+@container(max-width:420px){
+ .w-week-controls { gap:8px; }
+ .we-page .w-week-controls .wc-action { font-size:12px; padding:10px; }
+ .w-week-toolbar { padding:14px; flex-wrap:wrap; }
+ .w-week-toolbar h3 { font-size:20px; }
+ .w-week-toolbar>span { font-size:12px; }
+ .w-week-grid { display:block; }
+ .w-week-hours { display:none; }
+ .w-week-day { display:grid; grid-template-columns:44px minmax(0,1fr); border:0; border-top:1px solid var(--wc-line); padding:6px 8px; gap:8px; }
+ .w-week-day:first-of-type { border-top:0; }
+ .w-week-date { height:auto; align-self:start; border:0; padding-top:5px; }
+ .w-week-events { height:auto; background:none; display:flex; flex-direction:column; gap:6px; }
+ .w-week-event { position:static; height:auto; min-height:0; padding:8px; gap:3px; font-size:12px; flex-direction:column; align-items:start; }
+ .w-week-event strong { font-size:14px; }
+ .w-week-event-deadline { min-height:0; padding:6px 8px; }
+ .w-week-next { border-top-width:3px; }
+ .w-week-available { padding:10px 8px; }
+}
+</style>
+<script>
+ document.querySelectorAll<HTMLElement>("[data-week-comparison]").forEach(root=>{
+  const track=root.querySelector<HTMLElement>(".w-week-track")!;
+  const slides=[...track.querySelectorAll<HTMLElement>(".w-week-slide")];
+  const buttons=[...root.querySelectorAll<HTMLButtonElement>("[data-week-step]")];
+  const motion=matchMedia("(prefers-reduced-motion: reduce)");
+  function go(index:number){track.scrollTo({left:slides[index].offsetLeft-slides[0].offsetLeft,behavior:motion.matches?"instant":"smooth"});}
+  buttons.forEach((button,index)=>button.addEventListener("click",()=>go(index)));
+  track.addEventListener("scroll",()=>{const current=Math.round(track.scrollLeft/(slides[0].offsetWidth+16));buttons.forEach((button,index)=>button.setAttribute("aria-pressed",String(index===current)));},{passive:true});
+  track.addEventListener("keydown",event=>{if(event.key!=="ArrowRight"&&event.key!=="ArrowLeft")return;event.preventDefault();go(event.key==="ArrowRight"?1:0);});
+  root.querySelector<HTMLElement>(".w-week-controls")!.hidden=false;
+ });
+</script>

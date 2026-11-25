@@ -1,0 +1,199 @@
+---
+import MockupIcon from "./MockupIcon.astro";
+---
+<figure class="efficiency-visual" aria-label="Illustrative workflow for a time-sensitive carrier approval">
+  <ul class="carrier-evidence" aria-label="Shipment evidence">
+    <li>
+      <span class="carrier-source-icon"><img src="/wellington/connectors/gmail.svg" width="20" height="20" alt="" /></span>
+      <div class="carrier-evidence-copy">
+        <strong class="carrier-source">Carrier email</strong>
+        <p>Today’s pickup was canceled.</p>
+        <p>Received at <time datetime="14:20">2:20 p.m.</time></p>
+      </div>
+    </li>
+    <li>
+      <span class="carrier-source-icon"><MockupIcon name="file" /></span>
+      <div class="carrier-evidence-copy">
+        <strong class="carrier-source">Backup quote</strong>
+        <p>Same-day pickup is available.</p>
+        <p>Book by <time datetime="15:00">3 p.m.</time></p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="carrier-join" aria-hidden="true"></div>
+
+  <div class="carrier-assessment">
+    <span class="carrier-mark"><img src="/wellington/mark.svg" alt="" width="25" height="25" /></span>
+    <div>
+      <strong class="carrier-window">Today’s shipment can still go out</strong>
+      <p>Book the backup pickup within 40 minutes.</p>
+    </div>
+  </div>
+
+  <div class="carrier-link" aria-hidden="true"></div>
+
+  <div class="carrier-review">
+    <span class="carrier-review-icon"><MockupIcon name="people" /></span>
+    <div>
+      <strong>Sent to the logistics lead</strong>
+      <p>Carrier change awaiting their approval.</p>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .efficiency-visual {
+    --carrier-wire: #ffe5d3b3;
+    min-width: 0;
+    margin: 0;
+    padding: clamp(14px, 3.3vw, 48px);
+    border-radius: var(--flow-frame);
+    background: radial-gradient(ellipse at 78% 5%, #974832, #623026 65%, #4b241f);
+    color: #291b18;
+  }
+
+  .carrier-evidence {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .carrier-evidence li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
+    gap: clamp(7px, 1vw, 13px);
+    padding: clamp(11px, 1.5vw, 20px);
+    border: 1px solid #eedfd7;
+    border-radius: var(--flow-card);
+    background: #fff;
+  }
+
+  .carrier-source-icon {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 24px;
+  }
+
+  .carrier-source-icon img,
+  .carrier-source-icon :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+
+  .carrier-source {
+    display: block;
+    margin-bottom: 6px;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .carrier-evidence-copy p {
+    margin: 0;
+    color: #242424;
+    font-size: .8125rem;
+    line-height: 1.45;
+  }
+
+  .carrier-evidence-copy p + p {
+    margin-top: 4px;
+  }
+
+  .carrier-evidence-copy time {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .carrier-join {
+    width: 50%;
+    max-width: 240px;
+    height: 13px;
+    margin: auto;
+    border: 1px solid var(--carrier-wire);
+    border-top: 0;
+    border-radius: 0 0 7px 7px;
+  }
+
+  .carrier-join::after,
+  .carrier-link {
+    display: block;
+    width: 1px;
+    height: 13px;
+    margin: auto;
+    background: var(--carrier-wire);
+  }
+
+  .carrier-join::after {
+    content: "";
+    transform: translateY(12px);
+  }
+
+  .carrier-assessment,
+  .carrier-review {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    width: fit-content;
+    max-width: min(100%, 480px);
+    margin: 0 auto;
+    padding: 12px;
+    border-radius: var(--flow-card);
+    line-height: 1.4;
+  }
+
+  .carrier-assessment {
+    width: min(100%, 440px);
+    margin-top: 13px;
+    padding: 16px;
+    background: #fff;
+  }
+
+  .carrier-window {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .carrier-mark,
+  .carrier-review-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--flow-icon);
+  }
+
+  .carrier-review {
+    background: #fff;
+    font-size: .875rem;
+  }
+
+  .carrier-review-icon {
+    border: 1px solid var(--wg-icon-tile-line);
+    background: var(--wg-icon-tile);
+    color: #693225;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #5b3a31;
+    font-size: .8125rem;
+    text-wrap: pretty;
+  }
+  @media (max-width: 420px) {
+    .carrier-evidence { grid-template-columns: 1fr; }
+    .carrier-join { width: 1px; height: 26px; border: 0; border-radius: 0; background: var(--carrier-wire); }
+    .carrier-join::after { display: none; }
+  }
+</style>

@@ -1,0 +1,65 @@
+/* One material system for Wellington's marketing illustrations. */
+.d3-page.d3-page {
+ --wg-ink:#f4f6ef;
+ --wg-muted:#d1dcc9;
+ --wg-line:#c7d5b747;
+ --wg-panel:linear-gradient(135deg,#edf4dc22,#edf4dc0b),#183026b8;
+ --wg-inset:#dce6c909;
+ --wg-radius:12px;
+ --wg-icon-tile:#f5f2f3;
+ --wg-icon-tile-line:#e0d9dc;
+ --wg-backdrop:radial-gradient(ellipse at 5% 105%,#b5a34b8c,transparent 58%),radial-gradient(ellipse at 20% 75%,#39673c88,transparent 62%),linear-gradient(145deg,#03150d,#071d13 60%,#020b06);
+}
+.d3-page.d3-page .np.np,.d3-page.d3-page .cv.cv,.d3-page.d3-page .hw.hw,.d3-page.d3-page .tf-art.tf-art {
+ background:var(--wg-backdrop);color:var(--wg-ink);border-radius:24px;isolation:isolate;
+}
+.d3-page.d3-page .hw:before {display:none}
+.d3-page.d3-page :is(.np-request,.np-response,.np-engine,.cv-agent,.hw-node,.hw-config,.hw-output,.tf-provider-list>div,.tf-model-destination,.tf-connections,.tf-wellington) {
+ color:var(--wg-ink)!important;background:var(--wg-panel)!important;border:1px solid var(--wg-line)!important;border-radius:var(--wg-radius)!important;box-shadow:inset 0 1px 0 #f3f8e21f,0 12px 36px #0000001a!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important;
+}
+.d3-page.d3-page :is(.np-article,.hw-instructions,.hw-config-tabs,.cv-instruction,.cv-outcome,.tf-connections>div) {
+ background:var(--wg-inset);border-color:var(--wg-line);color:var(--wg-ink);box-shadow:none;
+}
+.d3-page.d3-page .np .np-answer,.d3-page.d3-page .np .np-answer p,.d3-page.d3-page .np .np-article strong {color:var(--wg-ink)}
+.d3-page.d3-page .np .np-article small,.d3-page.d3-page .np .np-sources,.d3-page.d3-page .hw .hw-node small,.d3-page.d3-page .hw .hw-rules>div,.d3-page.d3-page .hw .hw-config-tabs>span,.d3-page.d3-page .hw .hw-output-record p,.d3-page.d3-page .hw .hw-result p,.d3-page.d3-page .cv .cv-agent footer {color:var(--wg-muted)}
+.d3-page.d3-page .np .np-article>svg,.d3-page.d3-page .hw .hw-rules svg,.d3-page.d3-page .hw .hw-node>svg {stroke:var(--wg-muted)}
+.d3-page.d3-page .np .np-you {background:#e7efd918;color:var(--wg-ink);border:1px solid var(--wg-line)}
+.d3-page.d3-page .hw-mark {background:#f7f8f2;border:1px solid #d4dfc488;border-radius:7px}
+.d3-page.d3-page .hw .hw-config-tabs>span:first-child {background:#d7e6c921;color:var(--wg-ink);box-shadow:inset 0 0 0 1px var(--wg-line)}
+.d3-page.d3-page .hw :is(.hw-output-record,.hw-result),.d3-page.d3-page .cv .cv-agent footer>span:last-child {border-color:var(--wg-line)}
+.d3-page.d3-page .hw .hw-enabled {background:#b9d29f}
+.d3-page.d3-page .hw .hw-enabled:after {background:#173020}
+.d3-page.d3-page .cv .cv-outcome {background:#bfd69317;border-color:#c4d99b66;color:#e4efce}
+.d3-page.d3-page .tf-art .tf-provider-list>div {border-width:1px}
+.d3-page.d3-page .tf-art .tf-provider-list img {background:#f7f8f2;border-radius:6px;padding:4px;width:34px;height:34px}
+.d3-page.d3-page .tf-art .tf-model-destination>img,.d3-page.d3-page .tf-art .tf-wellington>img {background:#f7f8f2;border-radius:8px;padding:8px}
+.d3-page.d3-page .tf-art .tf-connections h4 {border-color:var(--wg-line)}
+.d3-page.d3-page .tf-art .tf-dot {background:#c8dda7}
+.d3-page.d3-page .tf-art .tf-logo-rail>div {background:#dce8cc17;border:1px solid var(--wg-line);backdrop-filter:blur(14px)}
+@media(max-width:700px){.d3-page.d3-page .np.np,.d3-page.d3-page .cv.cv,.d3-page.d3-page .hw.hw,.d3-page.d3-page .tf-art.tf-art{border-radius:16px}}
+@supports not (backdrop-filter:blur(1px)){.d3-page.d3-page :is(.np-request,.np-response,.np-engine,.cv-agent,.hw-node,.hw-config,.hw-output,.tf-provider-list>div,.tf-model-destination){background:#20382b}}
+
+.d3-page.d3-page .cv .cv-agent{background:linear-gradient(135deg,#edf4dc22,#edf4dc0b),#183026ed!important}
+
+/* Companion illustration follows the light agent reference. */
+.d3-page.d3-page .cv.cv {
+  background: linear-gradient(145deg, #17284666, #12162a80), url('/wellington/briefing-texture.webp') 45% center / cover #242d46;
+  color: #242424;
+}
+.d3-page.d3-page .cv .cv-agent{background:#fff!important;color:#242424!important;border-color:#e7e7e7!important;box-shadow:0 12px 36px #20202b14!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.d3-page.d3-page :is(.cv-avatar,.np-avatar){background:transparent;border:0}
+.d3-page.d3-page .cv .cv-instruction{background:#f2f2f2;color:#242424;border-color:transparent}
+.d3-page.d3-page .cv .cv-outcome{background:#e6ffe9;border-color:#119d22;color:#123e19}
+.d3-page.d3-page .cv .cv-outcome svg{stroke:#119d22}
+.d3-page.d3-page .cv .cv-agent footer{color:#555}
+.d3-page.d3-page .cv .cv-agent footer>span:last-child{border-color:#ccc}
+
+/* Northshire: burgundy canvas with fine red rays. */
+.d3-page.d3-page .np.np{position:relative;overflow:hidden;border-radius:var(--flow-frame);--wg-radius:var(--flow-card);background:repeating-conic-gradient(from 8deg at 50% 50%,transparent 0deg 29.7deg,#a52a354d 29.7deg 30deg),#3b151a;--wg-panel:#fff;--wg-line:#dcd7d8;--wg-ink:#282429;--wg-muted:#625a61;color:#282429}
+.d3-page.d3-page .np .np-request,.d3-page.d3-page .np .np-response{background:#fff!important;color:#282429!important;border-color:#ded8da!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 12px 36px #18060a26!important}
+.d3-page.d3-page .np .np-article{background:#f4f2f3;border-color:#ddd6da;color:#282429}
+.d3-page.d3-page .np .np-you{border-radius:var(--flow-icon);background:#eee9ec;color:#3b3037;border-color:#d6ccd1}
+.d3-page.d3-page .np .np-incoming,.d3-page.d3-page .np .np-outgoing,.d3-page.d3-page .np .np-incoming:after,.d3-page.d3-page .np .np-outgoing:after{border-color:#c58d94}
+
+.d3-page.d3-page .cv .cv-agent footer>span:last-child{display:inline-flex;align-items:center;gap:6px;background:#eeedf1;border:1px solid #d3ced8;border-radius:5px;color:#55515f;padding:5px 8px}
+.d3-page.d3-page .cv .cv-agent footer>span:last-child:before{content:"";width:4px;height:4px;flex:none;border-radius:50%;background:#c8cdbf}

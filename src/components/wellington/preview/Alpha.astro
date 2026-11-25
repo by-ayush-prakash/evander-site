@@ -1,0 +1,100 @@
+---
+import MockupIcon from "../MockupIcon.astro";
+const tasks = [
+  {title:"Connect your accounts.",icon:"mail",copy:"Bring supported mail and calendar accounts into Wellington. Account connections are being tested in the alpha; availability depends on your setup."},
+  {title:"Save useful context.",icon:"file",copy:"Keep project notes, relationship details and personal preferences alongside your work. Review, correct or remove what you save."},
+  {title:"Make it yours.",icon:"people",copy:"Change selected settings by asking Wellington. We’re developing more ways to arrange your workspace around the information you use most."},
+  {title:"On your terms.",icon:"edit",copy:"We’re building Sapiens to help Wellington take care of more without making you supervise every step. It will check whether actions fit your instructions and the boundaries you set, and bring you in when it needs your judgment."},
+];
+---
+<section data-page-section="alpha" class="w-context-section w-task-section" id="explore" aria-labelledby="tasks-heading">
+  <div class="wrap">
+    <h2 id="tasks-heading" class="w-section-title" data-w-reveal>More capacity.<br/><span>For the life you want.</span></h2>
+    <div class="w-task-grid" data-w-reveal>
+      {tasks.map(task=><details class="w-task" name="wellington-tasks">
+        <summary><MockupIcon name={task.icon}/><span class="w-task-title"><h3>{task.title}</h3></span><span class="w-task-indicator" aria-hidden="true">+</span></summary>
+        <div class="w-faq-answer"><p>{task.copy}{task.icon === "edit" && <> <a href="/wellington/governance/">Explore governance →</a></>}</p></div>
+      </details>)}
+    </div>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>(".w-task-grid").forEach(grid=>{
+    const items=[...grid.querySelectorAll<HTMLDetailsElement>(".w-task")];
+    const motion=matchMedia("(prefers-reduced-motion: reduce)");
+    const compact=matchMedia("(max-width:900px)");
+    const running=new Map<HTMLDetailsElement,{title:Animation;answer:Animation}>();
+    let previousWidth=0;
+    items.forEach(item=>{item.removeAttribute("name");item.dataset.expanded=String(item.open);});
+
+    function settle(){
+      running.forEach((animation,item)=>{animation.title.cancel();animation.answer.cancel();item.open=item.dataset.expanded==="true";});
+      running.clear();
+    }
+    function measure(){
+      settle();previousWidth=grid.getBoundingClientRect().width;
+      if(compact.matches){
+        delete grid.dataset.taskMotion;
+        grid.style.removeProperty("--task-height");
+        items.forEach(item=>item.style.removeProperty("--task-lift"));
+        return;
+      }
+      grid.dataset.taskMotion="";
+      let height=parseFloat(getComputedStyle(grid).getPropertyValue("--task-min-height"))||265;
+      items.forEach(item=>{
+        const wasOpen=item.open;item.open=true;
+        const summary=item.querySelector<HTMLElement>("summary")!;
+        const title=item.querySelector<HTMLElement>(".w-task-title")!;
+        const answer=item.querySelector<HTMLElement>(".w-faq-answer")!;
+        const paragraph=answer.querySelector("p")!;
+        const padding=parseFloat(getComputedStyle(summary).paddingTop);
+        const bottomPadding=parseFloat(getComputedStyle(paragraph).paddingBottom);
+        const answerHeight=answer.getBoundingClientRect().height;
+        const iconHeight=summary.querySelector("svg")!.getBoundingClientRect().height;
+        height=Math.max(height,padding+iconHeight+24+title.getBoundingClientRect().height+12+answerHeight);
+        item.style.setProperty("--task-lift",`${answerHeight-bottomPadding+12}px`);
+        item.open=wasOpen;
+      });
+      grid.style.setProperty("--task-height",`${Math.ceil(height)+2}px`);
+    }
+    function setExpanded(item:HTMLDetailsElement,expanded:boolean){
+      const title=item.querySelector<HTMLElement>(".w-task-title")!;
+      const answer=item.querySelector<HTMLElement>(".w-faq-answer")!;
+      const fromHeight=item.getBoundingClientRect().height;
+      const fromTitle=getComputedStyle(title).transform;
+      const fromAnswer=item.open?getComputedStyle(answer).transform:"translateY(100%)";
+      const fromOpacity=item.open?getComputedStyle(answer).opacity:"0";
+      const previous=running.get(item);previous?.title.cancel();previous?.answer.cancel();running.delete(item);
+      item.dataset.expanded=String(expanded);
+      if(motion.matches){item.open=expanded;return;}
+      item.open=true;
+      if(compact.matches){
+        const summary=item.querySelector<HTMLElement>("summary")!;
+        const style=getComputedStyle(item);
+        const borders=parseFloat(style.borderTopWidth)+parseFloat(style.borderBottomWidth);
+        const endHeight=expanded?item.getBoundingClientRect().height:summary.getBoundingClientRect().height+borders;
+        const height=item.animate({height:[`${fromHeight}px`,`${endHeight}px`]},{duration:280,easing:"cubic-bezier(.22,1,.36,1)"});
+        const fade=answer.animate({opacity:[fromOpacity,expanded?1:0]},{duration:expanded?220:160,fill:"forwards"});
+        const entry={title:height,answer:fade};running.set(item,entry);
+        height.onfinish=()=>{if(running.get(item)!==entry)return;item.open=expanded;height.cancel();fade.cancel();running.delete(item);};
+        return;
+      }
+      const options={duration:420,easing:"cubic-bezier(.22,1,.36,1)"};
+      const titleMotion=title.animate({transform:[fromTitle,expanded?`translateY(-${item.style.getPropertyValue("--task-lift")})`:"translateY(0)"]},options);
+      const answerMotion=answer.animate({transform:[fromAnswer,expanded?"translateY(0)":"translateY(100%)"],opacity:[fromOpacity,expanded?"1":"0"]},options);
+      const entry={title:titleMotion,answer:answerMotion};running.set(item,entry);
+      titleMotion.onfinish=()=>{if(running.get(item)!==entry)return;item.open=expanded;titleMotion.cancel();answerMotion.cancel();running.delete(item);};
+    }
+    items.forEach(item=>item.querySelector("summary")!.addEventListener("click",event=>{
+      event.preventDefault();
+      const expanded=item.dataset.expanded!=="true";
+      if(expanded)items.forEach(other=>{if(other!==item&&other.dataset.expanded==="true")setExpanded(other,false);});
+      setExpanded(item,expanded);
+    }));
+    measure();
+    new ResizeObserver(()=>{if(Math.abs(grid.getBoundingClientRect().width-previousWidth)>.5)measure();}).observe(grid);
+    document.fonts.ready.then(()=>{if(grid.isConnected)measure();});
+    compact.addEventListener("change",measure);
+    motion.addEventListener("change",()=>{if(motion.matches)settle();});
+  });
+</script>

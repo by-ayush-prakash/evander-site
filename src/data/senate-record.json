@@ -1,0 +1,129 @@
+{
+  "title": "CIF Before the Senate",
+  "heading": "CIF Before the Senate",
+  "summary": "A record of CIF’s testimony to the Senate of Canada on 2 February 2017, covering robotics, artificial intelligence, 3D printing and their implications for healthcare and public policy.",
+  "lede": "What CIF said about robotics, artificial intelligence and healthcare at the Senate of Canada.",
+  "linkLabel": "Read the testimony record",
+  "publicationDescription": "Reports, briefs and books that connect ideas with evidence and public discussion.",
+  "accuracyText": "The Center sources its analysis and corrects identified errors. The Senate page summarises CIF’s testimony of 2 February 2017. The linked official Senate transcript contains the complete exchange and original wording.",
+  "method": "These sections summarise CIF’s opening remarks and answers to senators. They describe the testimony as given in 2017; the official transcript records the original wording.",
+  "facts": [
+    {
+      "label": "Date",
+      "value": "2 February 2017"
+    },
+    {
+      "label": "Committee",
+      "value": "Standing Senate Committee on Social Affairs, Science and Technology"
+    },
+    {
+      "label": "Study",
+      "value": "Robotics, 3D printing and artificial intelligence in healthcare"
+    },
+    {
+      "label": "Witness",
+      "value": "Abishur Prakash, Geopolitical Futurist, Center for Innovating the Future"
+    }
+  ],
+  "sources": {
+    "senate": {
+      "label": "Senate of Canada · Committee evidence",
+      "date": "2 February 2017",
+      "url": "https://sencanada.ca/en/content/sen/Committee/421/soci/14ev-53044-e",
+      "scope": "Official transcript; establishes what was said, not independent proof of each assertion."
+    }
+  },
+  "subjects": [
+    {
+      "id": "automation-and-jobs",
+      "title": "Automation risk and Canadian jobs",
+      "kind": "Risk estimate and scenario",
+      "testimony": "We cited studies putting 42 percent of Canadian jobs at risk of automation. We discussed a scenario involving millions of job losses over 15–20 years, while acknowledging that automation could also create new jobs."
+    },
+    {
+      "id": "robotics-strategy",
+      "title": "A Canadian robotics strategy",
+      "kind": "Policy recommendation",
+      "testimony": "We recommended a comprehensive Canadian robotics strategy covering healthcare, economic diversification, social effects and foreign policy."
+    },
+    {
+      "id": "robotics-as-a-service",
+      "title": "Robotics as a service in hospitals",
+      "kind": "Business model",
+      "testimony": "We expected hospitals to gain more access to robots through recurring service payments, reducing the need to purchase robots upfront."
+    },
+    {
+      "id": "hospital-logistics",
+      "title": "Robots handling hospital deliveries",
+      "kind": "Reported application",
+      "testimony": "We described hospital robots delivering medicine and meals, carrying away dishes and changing sheets."
+    },
+    {
+      "id": "connected-biosensors",
+      "title": "Phone-connected biosensors",
+      "kind": "Technology direction",
+      "testimony": "We described smartphones communicating with biosensors attached to patients, allowing more people to be monitored at home at lower cost."
+    },
+    {
+      "id": "skin-cancer",
+      "title": "AI assessment of skin lesions",
+      "kind": "Clinical research and deployment",
+      "testimony": "We described AI identifying skin disease from images and a future in which people could use a smartphone to check a rash without first visiting a clinic."
+    },
+    {
+      "id": "watson",
+      "title": "Watson and agreement with doctors",
+      "kind": "Reported research finding",
+      "testimony": "We reported that Watson prescribed the same treatment as doctors in 99 percent of roughly 1,000 cases and identified additional options. We also described AI as being in its infancy."
+    },
+    {
+      "id": "epidemic-detection",
+      "title": "Detecting epidemics from phone audio",
+      "kind": "Proposed application",
+      "testimony": "We proposed using coughing and sneezing detected by phones to warn health services about an emerging neighbourhood epidemic."
+    },
+    {
+      "id": "radiology-and-pathology",
+      "title": "Automation in radiology and pathology",
+      "kind": "Conditional forecast",
+      "testimony": "We cited a report attributed to Harvard suggesting pathology work, and possibly radiology work, could be automated within 15–20 years. We also described continued human oversight."
+    }
+  ],
+  "contact": {
+    "heading": "Discuss the Center’s work.",
+    "body": "We welcome questions about the testimony, the evidence and what comes next. Use the Center’s official enquiry form to start a conversation.",
+    "label": "Start a conversation"
+  },
+  "additionalTopics": [
+    {
+      "id": "predictive-healthcare",
+      "title": "Predictive healthcare",
+      "testimony": "CIF described research using AI to anticipate health problems, including heart failure and mental health conditions. The testimony asked how earlier warning could change prevention, waiting lists and the allocation of treatment."
+    },
+    {
+      "id": "three-dimensional-printing",
+      "title": "3D printing and its limits",
+      "testimony": "CIF discussed research involving printed blood vessels, tissue and bone, and the longer-term possibility of printed organs. In answering senators, Prakash identified keeping living cells viable and the cost of equipment as major barriers. He also raised questions about regulation, access and possible black markets if organ printing became practical."
+    },
+    {
+      "id": "ethics-and-patient-data",
+      "title": "Ethics, safety and patient data",
+      "testimony": "CIF raised the possibility of bias being built into robots through engineering and programming decisions, and asked who should be responsible for those choices. Prakash discussed surgical safety, the data collected by robots caring for older people, and the implications of foreign companies or governments having access to that information."
+    },
+    {
+      "id": "cross-border-healthcare",
+      "title": "Cross-border healthcare and government",
+      "testimony": "CIF asked how Canadian healthcare regulation and funding would respond to patients accessing AI diagnosis or robotic services from other countries. Prakash described a possible shift toward subscription services and argued that governments would need to consider how to integrate private-sector advances into public healthcare."
+    },
+    {
+      "id": "education-and-preparation",
+      "title": "Education and preparation",
+      "testimony": "CIF called for a stronger effort to help the public understand emerging technology, including its inclusion in school curricula. Prakash described his own work as developing scenarios and connecting developments across industries so that organisations could prepare, rather than predicting a single fixed future."
+    },
+    {
+      "id": "interoperability",
+      "title": "Systems working together",
+      "testimony": "CIF identified interoperability as an unresolved issue: how hospital records, robots, AI systems and government infrastructure would communicate. Prakash asked whether systems developed by different companies, and updated at different speeds, would be able to work together."
+    }
+  ]
+}

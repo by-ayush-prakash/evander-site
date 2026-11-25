@@ -1,0 +1,129 @@
+---
+import { ORG } from "../config";
+import { workCategoryLinks } from "../data/work-categories";
+
+const { path = "/" } = Astro.props;
+
+// Mirrors the footer. Contact stays a button.
+const nav = [
+  {
+    label: "What We Do",
+    items: workCategoryLinks.map(({ title, href }) => ({ label: title, href })),
+  },
+  {
+    label: "Resources",
+    items: [
+      { label: "The Ayush Prakash Podcast", href: "https://innovatingfuture.com/podcast/" },
+      { label: "CIF In The Press", href: "https://innovatingfuture.com/media/" },
+      { label: "CIF Before the Senate", href: "https://innovatingfuture.com/senate-2017/" },
+    ],
+  },
+  {
+    label: "About Us",
+    items: [
+      { label: "Team", href: "https://innovatingfuture.com/team/" },
+      { label: "Careers", href: "https://innovatingfuture.com/careers/" },
+      { label: "Contact", href: "https://innovatingfuture.com/contact/" },
+    ],
+  },
+];
+
+const mobileNav = nav.map((group) => ({
+  ...group,
+  items: group.items.filter((item) => item.label !== "Careers" && item.label !== "Contact"),
+}));
+
+const active = (h: string) => path === h;
+const groupActive = (g: any) => g.items?.some((i: any) => path === i.href);
+---
+<nav class="site" aria-label="Main">
+  <div class="wrap navin">
+    <div class="nav-panel">
+      <a class="lock" href="https://innovatingfuture.com/" aria-label={`${ORG.name}, home`}>
+        <img src="/images/cif-assembly.svg" alt="" width="44" height="44" />
+        <span class="lock__name">{ORG.name}</span>
+      </a>
+
+      <div class="nlinks">
+        {nav.map((n) => (
+          <div class="ndrop">
+            <span class="ntrig" aria-current={groupActive(n) ? "true" : undefined}>
+              {n.label}
+              <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.2"/></svg>
+            </span>
+            <div class="npanel">
+              {n.items.map((i) => (
+                <a href={i.href} aria-current={active(i.href) ? "page" : undefined}>
+                  <span>{i.label}</span>
+                  <svg width="15" height="12" viewBox="0 0 15 12" fill="none" aria-hidden="true"><path d="M1 6h12M9 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button id="menubtn" class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobilemenu">
+        <svg class="burger__menu" width="26" height="18" viewBox="0 0 26 18" fill="none" aria-hidden="true">
+          <path d="M1 2h24M1 9h24M1 16h24" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+        </svg>
+        <svg class="burger__close" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 3l18 18M21 3L3 21" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+    <a class="btn nav-contact" href="https://innovatingfuture.com/contact/">Work with the Center</a>
+  </div>
+
+  <div id="mobilemenu" class="mnav" aria-hidden="true">
+    <div class="wrap mnavin">
+      <div class="mgroups">
+        {mobileNav.map((group) => (
+          <section class="mgroup" aria-labelledby={`mobile-${group.label.replaceAll(" ", "-").toLowerCase()}`}>
+            <h4 id={`mobile-${group.label.replaceAll(" ", "-").toLowerCase()}`}>{group.label}</h4>
+            <div class="mlinks">
+              {group.items.map((item) => (
+                <a href={item.href} aria-current={active(item.href) ? "page" : undefined}>{item.label}</a>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+      <div class="mactions">
+        <a class="btn btn--gh" href="https://innovatingfuture.com/careers/">Careers</a>
+        <a class="btn" href="https://innovatingfuture.com/contact/">Work with the Center</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById("menubtn");
+  const menu = document.getElementById("mobilemenu");
+  if (btn && menu) {
+    const setMenu = (open: boolean) => {
+      btn.setAttribute("aria-expanded", String(open));
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      btn.classList.toggle("is-open", open);
+      menu.setAttribute("aria-hidden", String(!open));
+      if (open) menu.setAttribute("data-open", "");
+      else menu.removeAttribute("data-open");
+      document.body.classList.toggle("menu-open", open);
+    };
+
+    const desktop = window.matchMedia("(width > 1080px)");
+    desktop.addEventListener("change", (event) => {
+      if (event.matches) setMenu(false);
+    });
+    btn.addEventListener("click", () => setMenu(btn.getAttribute("aria-expanded") !== "true"));
+    menu.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setMenu(false)));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && btn.getAttribute("aria-expanded") === "true") {
+        setMenu(false);
+        btn.focus();
+      }
+    });
+  }
+
+
+</script>

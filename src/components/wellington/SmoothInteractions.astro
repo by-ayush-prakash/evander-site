@@ -1,0 +1,33 @@
+<script>
+ import '../../scripts/wellington-motion';
+</script>
+<style is:global>
+:is(.cp-disclosures,.atlas-feature-list) .w-motion-answer{display:flow-root}
+:is(.cp-disclosures,.atlas-feature-list) summary{transition:color 180ms ease}
+:is(.cp-disclosures,.atlas-feature-list) summary>span{
+ position:relative;display:block;flex:none;width:20px;height:20px;
+ font-size:0!important;transform:none!important;
+}
+:is(.cp-disclosures,.atlas-feature-list) summary>span::before,
+:is(.cp-disclosures,.atlas-feature-list) summary>span::after{
+ content:'';position:absolute;left:3px;right:3px;top:9px;height:1.5px;
+ background:currentColor;transform-origin:center;
+ transition:transform 260ms cubic-bezier(.22,1,.36,1),opacity 200ms ease;
+}
+:is(.cp-disclosures,.atlas-feature-list) summary>span::after{transform:rotate(90deg)}
+:is(.cp-disclosures,.atlas-feature-list) details[data-expanded="true"] summary>span::after,
+:is(.cp-disclosures,.atlas-feature-list) details[open]:not([data-expanded]) summary>span::after{transform:rotate(0);opacity:0}
+body:has(.we-page) .npanel{transition:opacity 220ms ease,transform 280ms cubic-bezier(.22,1,.36,1),visibility 220ms}
+body:has(.we-page) :is(.cp-button,.atlas-button){transition:background-color 180ms ease,color 180ms ease}
+@media(max-width:1080px){
+ body:has(.we-page) .mnav{opacity:0;transform:translateY(-8px);transition:opacity 220ms ease,transform 280ms cubic-bezier(.22,1,.36,1),display 280ms allow-discrete}
+ body:has(.we-page) .mnav[data-open]{opacity:1;transform:none}
+ @starting-style{body:has(.we-page) .mnav[data-open]{opacity:0;transform:translateY(-8px)}}
+}
+@media(prefers-reduced-motion:reduce){
+ :is(.cp-disclosures,.atlas-feature-list) summary,
+ :is(.cp-disclosures,.atlas-feature-list) summary>span::before,
+ :is(.cp-disclosures,.atlas-feature-list) summary>span::after,
+ body:has(.we-page) :is(.npanel,.mnav,.cp-button,.atlas-button){transition:none!important}
+}
+</style>

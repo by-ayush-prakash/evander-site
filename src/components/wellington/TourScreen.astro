@@ -1,0 +1,294 @@
+---
+import Sidebar from "./Sidebar.astro";
+import Brand from "./Brand.astro";
+const { mode = "home" } = Astro.props;
+const names = ["Home", "Network", "Mail", "Calendar"];
+---
+
+<div
+  class={`wt-screen wt-screen--${mode}`}
+  aria-label={`Illustrative Wellington ${mode} interface`}
+>
+  <div class="wt-window">
+    <span>
+      <Brand />
+    </span>
+    <span>
+      Ayush Prakash <i>AP</i>
+    </span>
+  </div>
+  <div class="wt-app-layout">
+    <Sidebar active={mode} tour />
+    <div class="wt-app-main">
+      {mode === "home" && (
+        <>
+          <div class="wt-app-title">
+            <h4>Good morning, Aseem.</h4>
+            <p>A clear head start on the day.</p>
+          </div>
+          <div class="wt-home-grid">
+            <div>
+              <h5>Ready for your attention</h5>
+              <article class="wt-home-item">
+                <span class="wt-pair">
+                  <i>DH</i>
+                  <i>AG</i>
+                </span>
+                <h6>A connection worth making.</h6>
+                <p>
+                  David Hill and Anne Griffin share an interest in quantum
+                  computing. An introduction is ready to review.
+                </p>
+                <button type="button" data-tour-go="network">
+                  Review introduction <span aria-hidden="true">→</span>
+                </button>
+              </article>
+              <article class="wt-home-item">
+                <h6>Room for a catch-up.</h6>
+                <p>
+                  Alex Rosalez is due a conversation. Review a suggested time
+                  and invitation.
+                </p>
+                <button type="button" data-tour-go="calendar">
+                  See the suggested time <span aria-hidden="true">→</span>
+                </button>
+              </article>
+            </div>
+            <div class="wt-day">
+              <h5>The day ahead</h5>
+              <div>
+                <time>09:00</time>
+                <strong>Research proposal</strong>
+                <p>A little focused project time.</p>
+              </div>
+              <div>
+                <time>11:00</time>
+                <strong>Fieldwork conversation</strong>
+                <p>Maya Chen · Outline ready to review.</p>
+              </div>
+              <div>
+                <time>15:00</time>
+                <strong>Investor call</strong>
+                <p>Biotech & biosecurity · Briefing outline prepared.</p>
+                <button type="button" data-tour-go="calendar">
+                  See the day’s plan
+                </button>
+              </div>
+              <div class="wt-project-progress">
+                <span>Fieldwork proposal</span>
+                <strong>Next: review the open questions.</strong>
+                <button type="button" data-tour-go="mail">
+                  Pick up the conversation
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      {mode === "network" && (
+        <>
+          <div class="wt-app-title">
+            <h4>A few thoughtful connections.</h4>
+            <p>The people, the context, and a useful next step.</p>
+          </div>
+          <div class="wt-network-pair">
+            <div>
+              <span>DH</span>
+              <strong>David Hill</strong>
+              <small>Quantum computing</small>
+            </div>
+            <svg
+              aria-hidden="true"
+              width="90"
+              height="25"
+              viewBox="0 0 90 25"
+              fill="none"
+            >
+              <path
+                d="M2 12.5h86m-5-5 5 5-5 5M7 7.5l-5 5 5 5"
+                stroke="currentColor"
+              />
+            </svg>
+            <div>
+              <span>AG</span>
+              <strong>Anne Griffin</strong>
+              <small>Quantum computing</small>
+            </div>
+          </div>
+          <div class="wt-network-explanation">
+            <h5>Wellington noticed the overlap.</h5>
+            <p>
+              Two people in your network working in the same field. A
+              conversation you might not have thought to start.
+            </p>
+          </div>
+          <details class="wt-review">
+            <summary>Review the introduction</summary>
+            <label for="tour-introduction">Introduction draft</label>
+            <textarea id="tour-introduction" rows="4">David, Anne,
+
+You both work in quantum computing, and I thought there might be a useful conversation here. Would you be open to an introduction?</textarea>
+            <small>Editable preview. Nothing is sent.</small>
+          </details>
+          <div class="wt-reconnect">
+            <span class="wt-person-initials">AR</span>
+            <div>
+              <h5>Keep the conversation going with Alex.</h5>
+              <p>
+                Last spoke three months ago. Usual rhythm: two to three months.
+              </p>
+            </div>
+            <button type="button" data-tour-go="calendar">
+              Find a time
+            </button>
+          </div>
+        </>
+      )}
+      {mode === "mail" && (
+        <>
+          <div class="wt-app-title">
+            <h4>A clearer inbox.</h4>
+            <p>The conversation and the next step, together.</p>
+          </div>
+          <div class="wt-mail-layout">
+            <div class="wt-mail-list">
+              <div class="wt-mail-selected">
+                <strong>Maya Chen</strong>
+                <span>A good next chapter</span>
+                <p>The proposal is taking shape…</p>
+              </div>
+              <div>
+                <strong>Alex Rosalez</strong>
+                <span>Great to hear from you</span>
+                <p>Let’s find a time next week.</p>
+              </div>
+              <div>
+                <strong>Jordan Ellis</strong>
+                <span>Notes from yesterday</span>
+                <p>A few thoughts on the outline.</p>
+              </div>
+            </div>
+            <div class="wt-message">
+              <h5>A good next chapter</h5>
+              <p class="wt-message-sender">Maya Chen · To Alex Morgan</p>
+              <p>Hi Alex,</p>
+              <p>
+                The proposal is taking shape. Could we use our next conversation
+                to review the research outline and agree on the open questions?
+              </p>
+              <p>
+                Thanks,
+                <br />
+                Maya
+              </p>
+              <div class="wt-mail-context">
+                <strong>What needs a response</strong>
+                <p>
+                  Confirm the plan for the next conversation and bring the open
+                  questions.
+                </p>
+              </div>
+              <details class="wt-review">
+                <summary>Review the prepared reply</summary>
+                <label for="tour-reply">Reply draft</label>
+                <textarea id="tour-reply" rows="4">Hi Maya,
+
+That sounds good. I’ll review the outline and bring the open questions to our conversation.
+
+Alex</textarea>
+                <small>
+                  Editable preview. Review before sending; nothing is sent here.
+                </small>
+              </details>
+            </div>
+          </div>
+        </>
+      )}
+      {mode === "calendar" && (
+        <>
+          <div class="wt-app-title">
+            <h4>Make room for the important things.</h4>
+            <p>A plan for your time, with preparation built in.</p>
+          </div>
+          <div class="wt-calendar-grid">
+            <div>
+              <h5>Monday</h5>
+              <div class="wt-calendar-event">
+                <time>09:00–10:00</time>
+                <strong>Research outline</strong>
+                <span>Focus time</span>
+              </div>
+              <div class="wt-calendar-event wt-calendar-event--later">
+                <time>14:00–14:45</time>
+                <strong>Fieldwork review</strong>
+                <span>Proposal questions</span>
+              </div>
+            </div>
+            <div>
+              <h5>Tuesday</h5>
+              <div class="wt-calendar-event wt-calendar-event--suggested">
+                <time>11:00–11:30</time>
+                <strong>Catch-up with Alex</strong>
+                <span>Suggested · review invitation</span>
+              </div>
+            </div>
+            <div>
+              <h5>Wednesday</h5>
+              <div class="wt-calendar-event">
+                <time>09:00–10:00</time>
+                <strong>Writing time</strong>
+                <span>A clear hour</span>
+              </div>
+              <div class="wt-calendar-event wt-calendar-event--later">
+                <time>15:00–16:00</time>
+                <strong>Investor call</strong>
+                <span>Preparation outline available</span>
+              </div>
+            </div>
+          </div>
+          <div class="wt-calendar-plan">
+            <h5>A time to reconnect.</h5>
+            <p>
+              Select an illustrative slot for your catch-up with Alex Rosalez.
+            </p>
+            <div
+              class="wt-slots"
+              role="group"
+              aria-label="Sample catch-up times"
+            >
+              <button
+                type="button"
+                data-tour-slot="Tuesday, 11:00"
+                aria-pressed="true"
+              >
+                Tue · 11:00
+              </button>
+              <button
+                type="button"
+                data-tour-slot="Thursday, 14:00"
+                aria-pressed="false"
+              >
+                Thu · 14:00
+              </button>
+            </div>
+            <details class="wt-review">
+              <summary>Review the invitation</summary>
+              <p data-tour-selected-slot>Suggested time: Tuesday, 11:00</p>
+              <label for="tour-invitation">Invitation draft</label>
+              <textarea
+                id="tour-invitation"
+                rows="3"
+              >Hi Alex, would you have half an hour to catch up? It would be lovely to hear what you’ve been working on.</textarea>
+              <small>
+                Sample availability only. Nothing is booked or sent.
+              </small>
+            </details>
+          </div>
+        </>
+      )}
+      <p class="wt-concept-note">
+        Illustrative interface with fictional data. Local preview only.
+      </p>
+    </div>
+  </div>
+</div>

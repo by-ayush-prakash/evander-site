@@ -1,0 +1,149 @@
+---
+import Signup from "../../components/wellington/Signup.astro";
+import Base from "../../layouts/Base.astro";
+import TourScreen from "../../components/wellington/TourScreen.astro";
+import { WELLINGTON } from "../../config";
+import "../../styles/workspace-tour.css";
+const tabs = [
+  {
+    name: "Home",
+    heading: "Your day, with its context.",
+    copy: "Your calendar, conversations and ongoing work in one place, with an assistant you can ask for help.",
+  },
+  {
+    name: "Network",
+    heading: "Pick up the conversation.",
+    copy: "Return to relationship notes and follow-ups. Use the background you have saved to prepare the next conversation.",
+  },
+  {
+    name: "Mail",
+    heading: "Prepare the reply.",
+    copy: "Understand the conversation, see what needs a response, and review a reply with the relevant context already in place. Keep things moving without rebuilding the story every time.",
+  },
+  {
+    name: "Calendar",
+    heading: "Make room in your week.",
+    copy: "Review proposed time around your commitments and saved preferences. Confirm internal time blocks before adding them to your plan.",
+  },
+];
+---
+
+<Base
+  title="Wellington | Explore your workspace"
+  description={WELLINGTON.description}
+  noindex={true}
+  cta={false}
+>
+  <section class="wt-tour" aria-labelledby="tour-heading">
+    <div class="wrap">
+      <header class="wt-intro">
+        <h1 id="tour-heading">Your context, put to use.</h1>
+        <p>
+          A personal AI assistant for the work ahead and the life around it.
+        </p>
+      </header>
+      <div class="wt-tabs" role="tablist" aria-label="Explore Wellington">
+        {tabs.map((tab, i) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tour-tab-${tab.name.toLowerCase()}`}
+            aria-controls={`tour-panel-${tab.name.toLowerCase()}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            {tab.name}
+          </button>
+        ))}
+      </div>
+      {tabs.map((tab, i) => (
+        <div
+          class="wt-panel"
+          role="tabpanel"
+          id={`tour-panel-${tab.name.toLowerCase()}`}
+          aria-labelledby={`tour-tab-${tab.name.toLowerCase()}`}
+          hidden={i !== 0}
+        >
+          <div class="wt-copy">
+            <h2>{tab.heading}</h2>
+            <p>{tab.copy}</p>
+          </div>
+          <figure>
+            <div
+              class="wt-device-scroll"
+              tabindex="0"
+              role="region"
+              aria-label={`${tab.name} illustrative desktop mockup. Scroll to explore the interface on smaller screens.`}
+            >
+              <div class="wt-device">
+                <TourScreen mode={tab.name.toLowerCase()} />
+              </div>
+            </div>
+            <figcaption>
+              Design concept with fictional data. These interactions do not run
+              a live AI agent.
+            </figcaption>
+          </figure>
+        </div>
+      ))}
+      <div class="wt-review-footer">
+        <a href="/wellington/">Return to Wellington</a>
+        <a href="/wellington/network-concepts/">
+          Compare the Network directions
+        </a>
+      </div>
+    </div>
+  </section>
+  <Signup id="tour-signup" backHref="#tour-heading" />
+</Base>
+<script>
+  const tabs = [
+    ...document.querySelectorAll<HTMLButtonElement>('.wt-tabs [role="tab"]'),
+  ];
+  const select = (name: string, focus = false) => {
+    tabs.forEach((tab) => {
+      const active = tab.id === `tour-tab-${name}`;
+      tab.setAttribute("aria-selected", String(active));
+      tab.tabIndex = active ? 0 : -1;
+      const panel = document.getElementById(tab.getAttribute("aria-controls")!);
+      if (panel) panel.hidden = !active;
+      if (active && focus) tab.focus();
+    });
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () =>
+      select(tab.id.replace("tour-tab-", "")),
+    );
+    tab.addEventListener("keydown", (event) => {
+      let next = index;
+      if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+      else if (event.key === "ArrowLeft")
+        next = (index + tabs.length - 1) % tabs.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      select(tabs[next].id.replace("tour-tab-", ""), true);
+    });
+  });
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-tour-go]")
+    .forEach((button) =>
+      button.addEventListener("click", () =>
+        select(button.dataset.tourGo!, true),
+      ),
+    );
+  const slots = [
+    ...document.querySelectorAll<HTMLButtonElement>("[data-tour-slot]"),
+  ];
+  slots.forEach((button) =>
+    button.addEventListener("click", () => {
+      slots.forEach((b) =>
+        b.setAttribute("aria-pressed", String(b === button)),
+      );
+      const label = document.querySelector("[data-tour-selected-slot]");
+      if (label)
+        label.textContent = `Suggested time: ${button.dataset.tourSlot}`;
+    }),
+  );
+</script>

@@ -1,0 +1,15 @@
+---
+import Brand from './Brand.astro';
+import HeroRequests from './HeroRequests.astro';
+---
+<section class="aud-hero" id="wellington-top" aria-labelledby="aud-heading">
+ <header class="aud-heading"><div class="aud-brand"><Brand/></div><h1 id="aud-heading">Delegate recurring work. Review what matters.</h1><p>Wellington is being built to help teams delegate recurring work to AI agents with less manual checking. It is designed to assess what a proposed action could change before it runs.</p><div class="aud-actions"><a class="btn aud-request-access" href="#wellington-signup">Request access</a><a class="btn btn--gh aud-governance" href="https://innovatingfuture.com/ai-lab/">Governance</a></div><p class="aud-status">The workflows below illustrate planned capabilities.</p></header>
+ <HeroRequests/>
+</section>
+<style>
+.aud-hero{background:#fff;color:#242722;font-family:var(--sans);padding:72px 0 48px}.aud-heading{text-align:center;width:calc(100% - 48px);max-width:1250px;margin:auto}.aud-brand{font-size:32px;margin-bottom:28px}.aud-heading h1{font-size:var(--type-page-title);font-weight:400;line-height:1.07;letter-spacing:-.045em;margin:0;text-wrap:balance}.aud-heading>p{font-size:20px;line-height:1.5;max-width:900px;margin:24px auto 0;color:#44493f}
+@media(max-width:700px){.aud-hero{padding:42px 0 28px}.aud-heading{width:calc(100% - 40px)}.aud-brand{font-size:28px;margin-bottom:24px}.aud-desktop-break{display:none}.aud-heading h1{font-size:var(--type-page-title)}.aud-heading>p{font-size:17px;margin-top:20px}}
+
+.aud-actions{display:flex;align-items:center;justify-content:center;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-5)}
+.aud-heading > .aud-status{font-size:14px;margin-top:16px;color:#515650}
+</style>

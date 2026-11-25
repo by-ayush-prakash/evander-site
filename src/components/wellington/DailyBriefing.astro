@@ -1,0 +1,226 @@
+---
+import MockupIcon from "./MockupIcon.astro";
+---
+<figure class="briefing" aria-label="Illustrative Wellington daily agent briefing and follow-up">
+  <div class="briefing-thread">
+    <div class="briefing-exchange">
+      <div class="briefing-user" role="group" aria-label="You">
+        <p>What needs my attention today?</p>
+      </div>
+
+      <div class="wc-card briefing-reply" role="group" aria-label="Wellington">
+        <div class="briefing-heading">
+          <span class="briefing-mark"><img src="/wellington/mark.svg" alt="" width="25" height="25" /></span>
+          <h3>One folder needs review.</h3>
+        </div>
+        <div class="briefing-decision briefing-decision-meeting">
+          <span class="briefing-decision-icon"><MockupIcon name="file" /></span>
+          <div>
+            <strong>Weekly operations report</strong>
+            <p>Uses the folder proposed for archive</p>
+          </div>
+        </div>
+        <p>The cleanup agent had permission to archive it. The weekly operations report still pulls from it, so Wellington held that folder and sent the decision to the report owner.</p>
+        <footer class="briefing-audit">
+          <span id="briefing-audit-label">Tools and audit history</span>
+          <ul class="briefing-sources" aria-labelledby="briefing-audit-label">
+            <li>Archive request</li>
+            <li>Report dependency</li>
+            <li>Action held</li>
+          </ul>
+        </footer>
+      </div>
+    </div>
+
+    <div class="briefing-exchange">
+      <div class="briefing-user" role="group" aria-label="You">
+        <p>Keep that folder in place and continue with the eligible ones.</p>
+      </div>
+
+      <div class="wc-card briefing-reply" role="group" aria-label="Wellington">
+        <div class="briefing-heading">
+          <span class="briefing-mark"><img src="/wellington/mark.svg" alt="" width="25" height="25" /></span>
+          <h3>Folder left in place</h3>
+        </div>
+        <p>The weekly operations report can still use the folder.</p>
+        <div class="briefing-decision briefing-decision-policy">
+          <span class="briefing-decision-icon"><MockupIcon name="file" /></span>
+          <div>
+            <strong>35 folders cleared for archiving</strong>
+            <p>4 folders still fall within the 90-day window</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .briefing {
+    margin: 0;
+    padding: clamp(16px, 4.4vw, 64px);
+    border-radius: 24px;
+    position: relative;
+    isolation: isolate;
+    background: #2c2334;
+    color: #fff;
+  }
+
+  .briefing::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background:
+      linear-gradient(145deg, #25123255, #1a102a70),
+      url('/wellington/briefing-texture.webp') center / cover;
+    background-blend-mode: multiply;
+    filter: hue-rotate(53deg);
+  }
+
+  .briefing-thread {
+    display: grid;
+    gap: clamp(24px, 4vw, 56px);
+    max-width: 1060px;
+    margin-inline: auto;
+  }
+
+  .briefing-exchange {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .briefing-user {
+    align-self: end;
+    justify-self: end;
+    width: fit-content;
+    max-width: 100%;
+    padding: 10px 16px;
+    border-radius: 12px 12px 3px 12px;
+    background: #24152f99;
+    box-shadow: inset 0 1px 0 #ffffff24;
+  }
+
+  .briefing-user p,
+  .briefing-reply p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  .briefing-reply {
+    --wc-surface: #fff;
+    --wc-line: #fff;
+    --wc-ink: #28212d;
+    display: grid;
+    align-content: start;
+    gap: 16px;
+  }
+
+  .briefing-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .briefing-mark {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+
+  .briefing-heading h3 {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.1vw, 1.75rem);
+    line-height: 1.15;
+    letter-spacing: -.03em;
+    font-weight: 500;
+    text-wrap: balance;
+  }
+
+  .briefing-decision {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--decision-line);
+    border-radius: 9px;
+    background: var(--decision-surface);
+    color: #28212d;
+    font-size: .9375rem;
+    line-height: 1.4;
+  }
+
+  .briefing-decision-meeting {
+    --decision-line: #dce4e5;
+    --decision-surface: #f1f5f4;
+    --decision-icon-surface: #dcebe7;
+    --decision-ink: #2f5a51;
+  }
+
+  .briefing-decision-policy {
+    --decision-line: #e7dce9;
+    --decision-surface: #f6f0f6;
+    --decision-icon-surface: #eaddf0;
+    --decision-ink: #65456f;
+  }
+
+  .briefing-decision-icon {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 7px;
+    background: var(--decision-icon-surface);
+    color: var(--decision-ink);
+  }
+
+  .briefing-decision p {
+    margin-top: 3px;
+    color: var(--decision-ink);
+    font-size: .8125rem;
+    font-weight: 500;
+  }
+
+  .briefing-audit {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e4ddd0;
+    color: #554c59;
+    font-size: .875rem;
+    font-weight: 600;
+  }
+
+  .briefing-sources {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .briefing-sources li {
+    font-weight: 400;
+  }
+
+  @media (min-width: 1000px) {
+    .briefing-thread {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 16px;
+    }
+  }
+</style>

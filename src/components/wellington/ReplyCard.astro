@@ -1,0 +1,15 @@
+---
+interface Props {
+ title: string;
+ class?: string;
+ level?: "h2" | "h3";
+ id?: string;
+ hideHeading?: boolean;
+}
+const {title,class:className,level:Heading="h2",id,hideHeading=false} = Astro.props;
+---
+<article class:list={["wc-card wc-reply",className]} aria-label={`Illustrative example: ${title}`}>
+ {!hideHeading && <div class="wc-reply-body"><Heading class="wc-title" id={id}>{title}</Heading><div class="wc-response"><slot name="response"/></div></div>}
+ <div class="wc-attachments"><slot/></div>
+ {Astro.slots.has("actions") && <div class="wc-reply-actions"><slot name="actions"/></div>}
+</article>

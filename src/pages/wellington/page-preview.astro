@@ -1,0 +1,35 @@
+---
+import Base from "../../layouts/Base.astro";
+import Hero from "../../components/wellington/preview/Hero.astro";
+import Capabilities from "../../components/wellington/preview/Capabilities.astro";
+import Examples from "../../components/wellington/preview/Examples.astro";
+import AudienceStatement from "../../components/wellington/AudienceStatement.astro";
+import Alpha from "../../components/wellington/preview/Alpha.astro";
+import FAQ from "../../components/wellington/FAQ.astro";
+import Signup from "../../components/wellington/Signup.astro";
+import "../../styles/wellington.css";
+import "../../styles/wellington-editorial.css";
+import "../../styles/wellington-illustration.css";
+import "../../styles/wellington-context.css";
+import "../../styles/wellington-lens.css";
+
+---
+<Base title="Wellington page preview" description="Five-section Wellington alpha page preview." cta={false}>
+  <meta slot="head" name="robots" content="noindex,nofollow"/>
+  <div class="we-page w-context-page" id="wellington-top">
+    <header data-page-section="identity" class="we-hero"><Hero hero /></header>
+    <Capabilities />
+    <section data-page-section="examples" class="w-context-section w-workspace-section" aria-labelledby="workspace-heading">
+      <div class="wrap" id="how-it-works">
+        <h2 id="workspace-heading" class="w-section-title">Keep things moving.<br/><span>Keep your headspace.</span></h2>
+        <Examples />
+      </div>
+    </section>
+    <Alpha />
+    <AudienceStatement />
+    <div data-page-section="access">
+      <FAQ />
+      <Signup />
+    </div>
+  </div>
+</Base>

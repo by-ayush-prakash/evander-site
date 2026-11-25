@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" role="img" aria-labelledby="title">
+  <title id="title">CIF Assembly symbol</title>
+  <g fill="#26332f">
+    <path d="M10 10h34v34H10z"/>
+    <path d="M10 56h34v34H10z"/>
+    <path d="M56 10h34v34H68v12h22v34H56z"/>
+  </g>
+</svg>

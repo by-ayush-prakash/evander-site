@@ -1,0 +1,51 @@
+---
+// Static illustrative calendar; narrow cards use the agenda presentation.
+const days = [
+  {day:"Mon",date:16,events:[{title:"Weekly planning",time:"10–11 am",start:0,hours:1},{title:"Customer calls",time:"1–3 pm",start:3,hours:2}]},
+  {day:"Tue",date:17,events:[{title:"Northstar",detail:"Draft",time:"10 am–12 pm",start:0,hours:2,focus:true},{title:"Team sync",time:"1–2 pm",start:3,hours:1}]},
+  {day:"Wed",date:18,events:[{title:"Research",time:"10 am–12 pm",start:0,hours:2},{title:"Interviews",time:"1–3 pm",start:3,hours:2}]},
+  {day:"Thu",date:19,events:[{title:"Client work",time:"10 am–12 pm",start:0,hours:2},{title:"Northstar",detail:"Develop",time:"1–3 pm",start:3,hours:2,focus:true}]},
+  {day:"Fri",date:20,events:[{title:"Northstar",detail:"Finish",time:"10 am–12 pm",start:0,hours:2,focus:true},{title:"Team catch-up",time:"1–2 pm",start:3,hours:1}]},
+];
+---
+<div class="calendar-wrap">
+  <div class="calendar" aria-label="Proposed workweek, November 16–20, 2026">
+    <div class="calendar-head"><h4>November 16–20, 2026</h4><span>Proposed</span></div>
+    <div class="cal-grid">
+      <div class="cal-hours" aria-hidden="true"><div></div><span>10 am</span><span>11 am</span><span>12 pm</span><span>1 pm</span><span>2 pm</span></div>
+      {days.map(day=><div class="cal-day">
+        <div class="cal-date"><span>{day.day}</span><strong>{day.date}</strong></div>
+        <div class="cal-events">{day.events.map(event=><div class:list={["cal-event",{"cal-event-focus":"focus" in event && event.focus}]} style={`--start:${event.start};--duration:${event.hours}`}>
+          <strong>{event.title}</strong>{"detail" in event && <span>{event.detail}</span>}<span>{event.time}</span>
+        </div>)}</div>
+      </div>)}
+    </div>
+  </div>
+</div>
+<style>
+.calendar-wrap{container-type:inline-size}
+.calendar{border:1px solid var(--wc-line);border-radius:var(--wc-inset-radius);background:#fff;overflow:hidden}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;background:#edf2e5;border-bottom:1px solid #c5d1b8}
+.calendar-head h4{font-size:14px}
+.calendar-head>span{font-size:12px;line-height:1.3;color:#526448;padding:3px 9px;border:1px solid #c5d1b8;border-radius:999px;background:#f7f8f2;white-space:nowrap}
+.cal-grid{--hour:42px;--head:48px;display:grid;grid-template-columns:32px repeat(5,minmax(0,1fr))}
+.cal-hours{display:grid;grid-template-rows:var(--head) repeat(5,var(--hour));font-size:10px;color:#526448;text-align:right}
+.cal-hours>span{padding:4px 3px 0 0;white-space:nowrap}
+.cal-day{min-width:0;border-left:1px solid #c5d1b8}
+.cal-date{height:var(--head);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-bottom:1px solid #c5d1b8;font-size:11px;color:#526448}
+.cal-date strong{font-size:16px;font-weight:400;color:#293126}
+.cal-events{height:calc(5 * var(--hour));position:relative;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--hour) - 1px),#e3e8dc calc(var(--hour) - 1px),#e3e8dc var(--hour))}
+.cal-event{position:absolute;inset-inline:2px;top:calc(var(--start) * var(--hour) + 3px);height:calc(var(--duration) * var(--hour) - 6px);padding:4px 3px;border:1px solid #dedfdb;border-left:3px solid #b5b8b0;border-radius:4px;background:#f0f1ee;display:flex;flex-direction:column;gap:2px;font-size:10px;line-height:1.25;overflow-wrap:anywhere;color:#62675e}
+.cal-event strong{font-size:11px;font-weight:400;color:#62675e}
+.cal-event-focus{border:1px dashed #8da27a;border-left:3px solid #293f34;background:#edf2e5;color:#526448}
+.cal-event-focus strong{font-size:12px;color:#293126}
+@container(max-width:420px){
+ .cal-grid{display:block}.cal-hours{display:none}
+ .cal-day{display:grid;grid-template-columns:38px minmax(0,1fr);padding:10px;gap:10px;border-left:0}
+ .cal-day+.cal-day{border-top:1px solid #dbe2d3}
+ .cal-date{border:0;height:auto;align-self:start;padding-top:8px}
+ .cal-events{height:auto;background:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .cal-event{position:static;height:auto;min-height:0;padding:8px 6px;font-size:12px;gap:3px;overflow-wrap:normal}
+ .cal-event strong,.cal-event-focus strong{font-size:13px}
+}
+</style>

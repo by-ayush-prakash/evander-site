@@ -1,0 +1,45 @@
+---
+import MockupIcon from "./MockupIcon.astro";
+const contacts=[
+  {name:"Alex Rosalez",initials:"AR",cadence:"Every 3 months",lastSpoke:"4 months ago"},
+  {name:"Anne Griffin",initials:"AG",cadence:"Every 2 weeks",lastSpoke:"3 weeks ago"},
+  {name:"David Hill",initials:"DH",cadence:"Monthly",lastSpoke:"6 weeks ago"},
+  {name:"Jamie Meyer",initials:"JM",cadence:"Monthly",lastSpoke:"5 weeks ago"},
+];
+---
+<div class="wc-evidence w-network-catchups">
+  <div class="wc-panel-head w-network-head">
+    <span class="w-network-head-label"><MockupIcon name="people"/>Your network</span>
+    <span class="w-network-column-label">Last spoke</span>
+  </div>
+  <ul class="w-network-contacts">
+    {contacts.map(contact=><li>
+      <span class="w-network-avatar" aria-hidden="true">{contact.initials}</span>
+      <div class="w-network-person"><h4>{contact.name}</h4><p>Usually {contact.cadence.toLowerCase()}</p></div>
+      <span class="w-network-last-spoke">{contact.lastSpoke}</span>
+    </li>)}
+  </ul>
+</div>
+<style>
+:global(.we-page) .w-network-head { padding:12px 14px; background:var(--wc-surface); color:var(--wc-ink); }
+.w-network-head-label { display:flex; align-items:center; gap:8px; font-size:14px; }
+.w-network-head-label :global(svg) { width:18px; height:18px; color:var(--wc-muted); }
+.w-network-column-label { font-size:12px; color:var(--wc-muted); }
+.w-network-contacts { margin:0; padding:0; list-style:none; }
+.w-network-contacts li { display:grid; grid-template-columns:36px minmax(0,1fr) auto; align-items:center; gap:12px; padding:14px; }
+.w-network-contacts li+li { border-top:1px solid #e0e5d9; }
+.w-network-avatar { display:grid; place-items:center; width:36px; height:36px; border-radius:50%; background:#e9eee2; color:#405439; font-size:12px; line-height:1; letter-spacing:.02em; }
+li:nth-child(2) .w-network-avatar { background:#eeeae3; color:#635a4d; }
+li:nth-child(3) .w-network-avatar { background:#e9ece8; color:#4d5c51; }
+li:nth-child(4) .w-network-avatar { background:#f0ede5; color:#655e4e; }
+.w-network-person { min-width:0; }
+.w-network-person h4 { margin:0; color:var(--wc-ink); font:400 15px/1.4 Arial,Helvetica,sans-serif; letter-spacing:-.015em; }
+.w-network-person p { margin:3px 0 0; color:var(--wc-muted); font:400 12px/1.5 Arial,Helvetica,sans-serif; }
+.w-network-last-spoke { color:var(--wc-ink); font-size:13px; line-height:1.4; white-space:nowrap; font-variant-numeric:tabular-nums; }
+@media(max-width:380px) {
+ .w-network-contacts li { grid-template-columns:30px minmax(0,1fr) auto; gap:8px; padding:12px; }
+ .w-network-avatar { width:30px; height:30px; font-size:11px; }
+ .w-network-person h4 { font-size:14px; }
+ .w-network-last-spoke { font-size:12px; }
+}
+</style>

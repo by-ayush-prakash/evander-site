@@ -1,0 +1,102 @@
+---
+import ReplyCard from "../ReplyCard.astro";
+import WeekComparison from "../WeekComparison.astro";
+import EvidenceRow from "../EvidenceRow.astro";
+import NetworkCatchups from "../NetworkCatchups.astro";
+const scenarios = [
+  {
+    id:"pitch",label:"Prepare for a pitch",request:"What should I ask at tomorrow’s founder meeting?",
+    title:"Start with the retention question.",
+    response:"Your last meeting notes flag customer retention as the open question. I’ve turned that into a short agenda and drafted a request for updated numbers.",
+    blocks:[
+      {title:"Customer retention",detail:"Ask what changed since the previous meeting",icon:"file"},
+      {title:"Use of the raise",detail:"Ask which milestones the new funding would cover",icon:"file"},
+    ],
+    panelTitle:"Founder meeting · Draft agenda",
+    draftTo:"To the founder",draft:"Ahead of tomorrow’s meeting, could you share the latest customer retention figures? I’d also like to discuss the milestones this round would fund.",
+  },
+  {
+    id:"followup",label:"Catch up with your network",request:"Who haven’t I caught up with in a while?",
+    title:"Four people to catch up with.",
+    response:"Based on your saved contact history, these four are beyond your usual catch-up rhythm. I’ve drafted a check-in for each. Should I add your Calendly link or suggest times from your calendar?",
+    blocks:[],
+    panelTitle:"Your network · Contact history",
+    draftTo:"",draft:"",
+  },
+  {
+    id:"reshape",label:"Make the school run",request:"School pickup’s Thursday. Can we move my work?",
+    title:"Keep pickup. Move the flexible work.",
+    response:"I’d move proposal work to Wednesday and flexible research to Monday. Thursday’s client deadline stays in place, with the afternoon free for school pickup.",
+    blocks:[],panelTitle:"",draftTo:"",draft:"",
+  },
+];
+---
+<div class="w-scenarios" data-w-scenarios>
+  <div class="w-scenario-tabs" aria-label="Wellington examples" hidden>
+    {scenarios.map((scenario)=><button type="button" id={`scenario-tab-${scenario.id}`} aria-controls={`scenario-${scenario.id}`}>{scenario.label}</button>)}
+  </div>
+  {scenarios.map((scenario)=><section class="w-scenario-panel" id={`scenario-${scenario.id}`} aria-label={scenario.label}>
+    <figure class="w-context-demo w-scenario-grid" aria-label={`Illustrative example: ${scenario.label}`}>
+      <div class="wc-card w-scenario-input">
+        <div class="w-context-request">
+          <img src="/wellington/mark.svg" alt="Wellington" width="32" height="32"/>
+          <blockquote>{scenario.request}</blockquote>
+        </div>
+      </div>
+      <ReplyCard title={scenario.title} class="w-scenario-result">
+        <p slot="response">{scenario.response}</p>
+        {scenario.id === "reshape" ? <WeekComparison /> : scenario.id === "followup" ? <NetworkCatchups/> : <div class="wc-evidence"><div class="wc-panel-head">{scenario.panelTitle}</div>{scenario.blocks.map(block=><EvidenceRow title={block.title} detail={block.detail} icon={block.icon}/>)}</div>}
+        {scenario.id==="followup" ? <div class="wc-evidence w-checkin-summary"><EvidenceRow icon="mail" title="4 check-ins drafted" detail="Alex, Anne, David and Jamie" meta="Not sent"/></div> : scenario.draft && <div class="wc-draft"><div class="wc-draft-toolbar">{scenario.draftTo} · Unsent draft</div><p>{scenario.draft}</p></div>}
+      </ReplyCard>
+    </figure>
+  </section>)}
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>("[data-w-scenarios]").forEach(root=>{
+    const tabs=root.querySelector<HTMLElement>(".w-scenario-tabs")!;
+    const buttons=[...tabs.querySelectorAll<HTMLButtonElement>("button")];
+    const panels=[...root.querySelectorAll<HTMLElement>(".w-scenario-panel")];
+    const motion=matchMedia("(prefers-reduced-motion: reduce)");
+    let active=0;
+    function select(index:number,focus=false){
+      const startHeight=root.getBoundingClientRect().height;
+      root.getAnimations().forEach(animation=>animation.cancel());
+      buttons.forEach((button,i)=>{
+        button.setAttribute("aria-selected",String(i===index));
+        button.tabIndex=i===index?0:-1;
+        panels[i].getAnimations().forEach(animation=>animation.cancel());
+        panels[i].hidden=i!==index;
+      });
+      if(index!==active&&!motion.matches){
+        root.animate({height:[`${startHeight}px`,`${root.getBoundingClientRect().height}px`]},{duration:320,easing:"cubic-bezier(.22,1,.36,1)"});
+        panels[index].animate({opacity:[0,1],transform:["translateY(10px)","translateY(0)"]},{duration:320,easing:"cubic-bezier(.22,1,.36,1)"});
+      }
+      active=index;
+      if(tabs.scrollWidth>tabs.clientWidth){
+        const bounds=tabs.getBoundingClientRect(),selected=buttons[index].getBoundingClientRect();
+        const offset=selected.left<bounds.left?selected.left-bounds.left-6:selected.right>bounds.right?selected.right-bounds.right+6:0;
+        if(offset)tabs.scrollTo({left:tabs.scrollLeft+offset,behavior:motion.matches?"instant":"smooth"});
+      }
+      if(focus)buttons[index].focus({preventScroll:true});
+    }
+    tabs.setAttribute("role","tablist");
+    buttons.forEach((button,index)=>{
+      button.setAttribute("role","tab");
+      panels[index].setAttribute("role","tabpanel");
+      panels[index].setAttribute("aria-labelledby",button.id);
+      panels[index].tabIndex=0;
+      button.addEventListener("click",()=>select(index));
+      button.addEventListener("keydown",event=>{
+        const next=event.key==="ArrowRight"?(index+1)%buttons.length:event.key==="ArrowLeft"?(index+buttons.length-1)%buttons.length:event.key==="Home"?0:event.key==="End"?buttons.length-1:null;
+        if(next===null)return;
+        event.preventDefault();select(next,true);
+      });
+    });
+    select(0);tabs.hidden=false;
+    motion.addEventListener("change",()=>{if(motion.matches)root.getAnimations({subtree:true}).forEach(animation=>animation.cancel());});
+  });
+</script>
+
+<style>
+:global(.we-page) .w-checkin-summary { background:var(--wc-tint); }
+</style>

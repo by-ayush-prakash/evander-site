@@ -1,0 +1,20 @@
+---
+import Brand from "./Brand.astro";
+const {active="home",tour=false}=Astro.props;
+const items=[
+ {id:"home",label:"Home",path:"m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"},
+ {id:"mail",label:"Mail",path:"M3 5h18v14H3Zm0 1 9 7 9-7"},
+ {id:"calendar",label:"Calendar",path:"M4 5h16v16H4ZM4 10h16M8 2v6m8-6v6M8 14h1m3 0h1m3 0h1M8 17h1m3 0h1"},
+ {id:"projects",label:"Projects",path:"M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0Zm-4 0a6 6 0 1 1-12 0 6 6 0 0 1 12 0Zm-4 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"},
+ {id:"network",label:"Network",path:"M16 21v-3a5 5 0 0 0-5-5H7a5 5 0 0 0-5 5v3M13 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0Zm4-4a4 4 0 0 1 0 8m3 11v-3a5 5 0 0 0-3-4"},
+ {id:"settings",label:"Settings",path:"m9 3 1-2h4l1 2 3 2 2 0 2 4-2 2v2l2 2-2 4h-2l-3 2-1 2h-4l-1-2-3-2H4l-2-4 2-2v-2L2 9l2-4h2Zm7 9a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"},
+];
+---
+<aside class="wm-sidebar" aria-label="Wellington workspace navigation mockup">
+ <div class="wm-logo"><Brand /></div>
+ <div class="wm-destinations">{items.map(item=>tour&&['home','mail','calendar','network'].includes(item.id)?<button class:list={["wm-destination",{"wm-selected":active===item.id}]} type="button" data-tour-go={item.id} aria-pressed={active===item.id?"true":"false"}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={item.path}/></svg><span>{item.label}</span></button>:<div class:list={["wm-destination",{"wm-selected":active===item.id}]}><svg viewBox="0 0 24 24" aria-hidden="true"><path d={item.path}/></svg><span>{item.label}</span></div>)}</div>
+ <div class="wm-identity"><span>AP</span><b>Aseem Prakash</b></div>
+</aside>
+<style>
+.wm-sidebar{display:flex!important;flex-direction:column!important;width:190px!important;flex-shrink:0;background:#f4f5ef!important;border-right:1px solid #d9decf;padding:28px 16px 18px!important;color:#30372d;font-family:Arial,Helvetica,sans-serif;align-self:stretch}.wm-logo{font-size:23px;margin:0 8px 38px}.wm-destinations{display:flex;flex-direction:column;gap:11px}.wm-destination{display:flex!important;align-items:center;gap:13px!important;position:relative;box-sizing:border-box;padding:15px 13px!important;margin:0!important;width:100%;border:0!important;border-radius:4px;background:transparent;color:#66725c!important;font:500 15px/1.2 Arial,Helvetica,sans-serif!important;text-align:left}.wm-destination>svg{width:21px;height:21px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.wm-destination>span{font:inherit!important;color:inherit!important;padding:0!important;border:0!important;background:transparent!important;display:inline!important;width:auto!important;height:auto!important}.wm-selected{background:#e9edde!important;color:#30372d!important;box-shadow:inset 4px 0 #b7242b}.wm-identity{margin-top:auto;padding-top:21px;border-top:1px solid #d9decf;display:flex;align-items:center;gap:11px;font-size:12px;min-height:60px}.wm-identity>span{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#e2e8d7;font-size:12px;flex-shrink:0}.wm-identity b{font-weight:500}.wm-sidebar button{cursor:pointer}.wm-sidebar button:focus-visible{outline:2px solid #b7242b;outline-offset:2px}
+</style>

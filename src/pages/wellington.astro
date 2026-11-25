@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+import DirectionThree from "../components/wellington/DirectionThree.astro";
+import Signup from "../components/wellington/Signup.astro";
+import "../styles/wellington.css";
+import "../styles/wellington-editorial.css";
+import "../styles/wellington-illustration.css";
+---
+<Base title="Wellington" socialTitle="Wellington | Delegate recurring work. Review what matters." description="Wellington is being built to help teams delegate recurring work to AI agents with less manual checking. It is designed to assess what a proposed action could change before it runs." socialImage="/wellington/app-icon.png" socialImageAlt="Wellington logo" socialImageWidth={1254} socialImageHeight={1254} socialCard="summary" cta={false}>
+  <script slot="head" is:inline>
+    (() => {
+      const navigation = performance.getEntriesByType("navigation")[0];
+      if (navigation?.type !== "reload") return;
+      // A refresh starts a fresh visit; ordinary links and Back retain native scrolling.
+      history.scrollRestoration = "manual";
+      if (location.hash === "#wellington-signup-form") {
+        history.replaceState(history.state, "", location.pathname + location.search);
+      }
+      const startAtTop = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      window.addEventListener("pageshow", startAtTop, { once: true });
+      window.addEventListener("pagehide", () => { history.scrollRestoration = "auto"; }, { once: true });
+    })();
+  </script>
+ <div class="we-page d3-page">
+  <DirectionThree/>
+  <Signup compass/>
+ </div>
+</Base>
+<style>
+ .d3-page{background:#fff}
+</style>

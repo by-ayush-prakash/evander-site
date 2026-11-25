@@ -1,0 +1,134 @@
+---
+import MockupIcon from "../MockupIcon.astro";
+import Brand from "../Brand.astro";
+import ProposedCalendar from "../ProposedCalendar.astro";
+interface Props { hero?: boolean; }
+const {hero=false}=Astro.props;
+const Heading=hero?"h1":"h2";
+const sources=[
+  {title:"Your inbox",kind:"inbox",detail:"Northstar needs 6 hours. First draft due Friday at 3 pm.",icon:"mail"},
+  {title:"Your calendars",kind:"calendars",detail:"4 hours free this week. Friday’s 2 hours of admin can move to Monday.",icon:"calendar"},
+  {title:"Your contacts",kind:"contacts",detail:"Previous meeting notes: review the first pass together, with scope questions collected beforehand.",icon:"people"},
+  {title:"Your personal preferences",kind:"preferences",detail:"“Keep my evenings free.”",icon:"lock"},
+];
+---
+<section class:list={["w-context-section w-context-lens",{"w-lens-hero":hero}]} aria-labelledby="context-heading">
+  <div class="wrap w-lens-inner">
+    {hero && <div class="w-lens-hero-brand"><Brand /></div>}
+    <Heading id="context-heading">{hero ? "Be more you." : "Your world."}<br/><span>{hero ? "Even when life gets busy." : "In the answer."}</span></Heading>
+    {hero && <>
+      <p class="w-vision-lead">An assistant that knows what matters to you and helps take care of it. We’re building Wellington to remember your preferences, anticipate what needs attention and take everyday work off your hands.</p>
+      <div class="w-context-actions"><a class="we-button" href="#wellington-signup-form">Get alpha updates<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M3 3h10v10" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></a></div>
+    </>}
+    <blockquote class="w-lens-request"><img src="/wellington/mark.svg" alt="Wellington" width="32" height="32"/><span>Can I take on Northstar and still deliver on my other commitments?</span></blockquote>
+    <figure class="w-context-demo w-lens-flow" data-context-lens aria-label="Illustrative recommendation using mail, calendar, previous meeting notes and an explicit personal preference">
+      <svg class="w-lens-connections" preserveAspectRatio="none" aria-hidden="true"><g fill="none" stroke="#8da27a" stroke-width="1.3">{sources.map(()=><path data-lens-source-path/>)}<path data-lens-answer-path/></g></svg>
+      <div class="wc-evidence w-lens-sources" aria-label="Explore the context behind Wellington’s reply">
+        {sources.map(source=><details class="w-lens-source">
+          <summary>
+            <span class="w-lens-source-label">{source.title}</span>
+            <span class="w-lens-source-assets">
+              {source.kind==="inbox" && <><img src="/wellington/connectors/microsoft-outlook.svg" alt="Outlook" width="24" height="24"/><img src="/wellington/connectors/gmail.svg" alt="Gmail" width="24" height="24"/></>}
+              {source.kind==="calendars" && <img src="/wellington/connectors/google-calendar.svg" alt="Google Calendar" width="24" height="24"/>}
+              {source.kind==="contacts" && <img class="w-lens-contact-photo" src="/wellington/people/sam.jpg" alt="" width="32" height="32"/>}
+              {source.kind==="preferences" && <MockupIcon name="lock"/>}
+            </span>
+            <svg class="w-lens-source-chevron" width="14" height="14" viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          </summary>
+          <p class="w-lens-source-note"><img src="/wellington/mark.svg" alt="Wellington" width="20" height="20"/><strong>{source.kind==="contacts" && <span>Sam · </span>}{source.detail}</strong></p>
+        </details>)}
+      </div>
+      <div class="w-lens-center"><div class="w-lens-mark"><img src="/wellington/mark.svg" alt="" width="48" height="48"/></div></div>
+      <article class="wc-card wc-reply w-lens-answer" aria-label="Illustrative reply from Wellington with a proposed Northstar plan">
+        <div class="wc-reply-body">
+          <h3 class="w-lens-speaker"><img src="/wellington/mark.svg" alt="" width="22" height="22"/>Wellington</h3>
+          <div class="wc-response"><p>Yes, if we move Friday’s admin to Monday. That gives you six hours for Northstar before the deadline.</p><p>Sam asked to review it together in your last meeting. I’ve drafted him a note for Friday.</p></div>
+        </div>
+        <div class="wc-attachments">
+          <ProposedCalendar/>
+
+        </div>
+      </article>
+    </figure>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>("[data-context-lens]").forEach(root=>{
+    const svg=root.querySelector<SVGSVGElement>(".w-lens-connections")!;
+    const sources=[...root.querySelectorAll<HTMLElement>(".w-lens-source")];
+    const paths=[...svg.querySelectorAll<SVGPathElement>("[data-lens-source-path]")];
+    const mark=root.querySelector<HTMLElement>(".w-lens-mark")!;
+    const answer=root.querySelector<HTMLElement>(".w-lens-answer")!;
+    function connect(){
+      const bounds=root.getBoundingClientRect();
+      if(!bounds.width||!bounds.height||getComputedStyle(svg).display==="none")return;
+      // Explicit sizing avoids percentage-height differences in SVG grid overlays.
+      svg.style.height=`${root.clientHeight}px`;
+      svg.setAttribute("viewBox",`0 0 ${root.clientWidth} ${root.clientHeight}`);
+      const matrix=svg.getScreenCTM();
+      if(!matrix)return;
+      const inverse=matrix.inverse();
+      const point=(x:number,y:number)=>new DOMPoint(x,y).matrixTransform(inverse);
+      const center=mark.getBoundingClientRect();
+      const target=point(center.left,center.top+center.height/2);
+      sources.forEach((source,index)=>{
+        const box=source.getBoundingClientRect();
+        const start=point(box.right,box.top+box.height/2);
+        const middle=(start.x+target.x)/2;
+        paths[index].setAttribute("d",`M${start.x} ${start.y} C${middle} ${start.y} ${middle} ${target.y} ${target.x} ${target.y}`);
+      });
+      const box=answer.getBoundingClientRect();
+      const start=point(center.right,center.top+center.height/2);
+      const end=point(box.left,box.top+box.height/2);
+      svg.querySelector("[data-lens-answer-path]")!.setAttribute("d",`M${start.x} ${start.y} L${end.x} ${end.y}`);
+    }
+    const motion=matchMedia("(prefers-reduced-motion: reduce)");
+    const disclosures=new Map<HTMLDetailsElement,{expanded:boolean;height?:Animation;note?:Animation}>();
+    function settle(item:HTMLDetailsElement){
+      const state=disclosures.get(item)!;
+      state.height?.cancel();
+      state.note?.cancel();
+      state.height=undefined;
+      state.note=undefined;
+      item.open=state.expanded;
+      item.style.removeProperty("overflow");
+    }
+    sources.forEach(source=>{
+      if(!(source instanceof HTMLDetailsElement))return;
+      const summary=source.querySelector<HTMLElement>("summary")!;
+      const note=source.querySelector<HTMLElement>(".w-lens-source-note")!;
+      const state={expanded:source.open} as {expanded:boolean;height?:Animation;note?:Animation};
+      disclosures.set(source,state);
+      source.dataset.expanded=String(state.expanded);
+      summary.setAttribute("aria-expanded",String(state.expanded));
+      summary.addEventListener("click",event=>{
+        event.preventDefault();
+        const startHeight=source.getBoundingClientRect().height;
+        const startOpacity=source.open?Number(getComputedStyle(note).opacity):0;
+        state.height?.cancel();
+        state.note?.cancel();
+        state.expanded=!state.expanded;
+        source.dataset.expanded=String(state.expanded);
+        summary.setAttribute("aria-expanded",String(state.expanded));
+        if(motion.matches){settle(source);connect();return;}
+        source.open=true;
+        const style=getComputedStyle(source);
+        const borders=parseFloat(style.borderTopWidth)+parseFloat(style.borderBottomWidth);
+        const endHeight=state.expanded?source.getBoundingClientRect().height:summary.getBoundingClientRect().height+borders;
+        source.style.overflow="hidden";
+        const height=source.animate({height:[`${startHeight}px`,`${endHeight}px`]},{duration:280,easing:"cubic-bezier(.22,1,.36,1)"});
+        state.height=height;
+        state.note=note.animate({opacity:[startOpacity,state.expanded?1:0]},{duration:state.expanded?220:160,fill:"forwards",easing:"ease-out"});
+        height.onfinish=()=>{if(state.height===height){settle(source);connect();}};
+      });
+    });
+    const settleDisclosures=()=>{disclosures.forEach((_state,item)=>settle(item));connect();};
+    window.addEventListener("resize",settleDisclosures);
+    motion.addEventListener("change",()=>{if(motion.matches)settleDisclosures();});
+    const observer=new ResizeObserver(connect);
+    [root,mark,answer,...sources].forEach(element=>observer.observe(element));
+    window.addEventListener("resize",connect);
+    document.fonts.ready.then(connect);
+    connect();
+  });
+</script>

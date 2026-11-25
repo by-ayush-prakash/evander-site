@@ -1,0 +1,6 @@
+---
+import MockupIcon from "./MockupIcon.astro";
+interface Props {title:string;detail:string;icon?:string;meta?:string;}
+const {title,detail,icon="check",meta} = Astro.props;
+---
+<div class:list={["wc-record",{"wc-record-with-action":Astro.slots.has("default")}]}><MockupIcon name={icon}/><div class="wc-record-copy"><h4>{title}</h4><p>{detail}</p>{Astro.slots.has("default") && <div class="wc-record-action"><slot/></div>}</div>{meta && <span class="wc-record-meta">{meta}</span>}</div>

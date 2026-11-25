@@ -1,0 +1,51 @@
+---
+import ReplyCard from "../ReplyCard.astro";
+import EvidenceRow from "../EvidenceRow.astro";
+interface Props { kind:"mail"|"network"|"calendar"|"connections"; }
+const {kind}=Astro.props;
+const titles={mail:"Lee is waiting on your insurance.",network:"Daniel’s interests fit Maya’s raise.",calendar:"Thursday has room for one more pitch.",connections:"App connections"};
+const requests={mail:"Anything left before I get the keys?",network:"Who could help Maya’s climate-tech raise?",calendar:"Can I fit another founder pitch in this week?",connections:""};
+const connections=[
+ {name:"Gmail",asset:"gmail"},
+ {name:"Google Calendar",asset:"google-calendar"},
+ {name:"Outlook",asset:"microsoft-outlook"},
+ {name:"iCloud",asset:"icloud"},
+ {name:"Notion",asset:"notion"},
+ {name:"Zoom",asset:"zoom"},
+];
+---
+<div class="w-mini-thread" data-why-example={kind}>
+  {requests[kind] && <blockquote class="wc-inset w-mini-request">{requests[kind]}</blockquote>}
+  <ReplyCard title={titles[kind]} level="h3" hideHeading={kind==="connections"} class={kind==="connections"?"w-why-example w-why-apps-only":"w-why-example"}>
+    <Fragment slot="response">{kind==="mail" && <p>Lee needs your insurance certificate before handing over the keys. I’ve drafted a reply to confirm the format and deadline.</p>}{kind==="calendar" && <p>You already have eight pitches booked. Thursday at 2 pm is free, with 30 minutes beforehand to read the deck. Friday stays clear for investment committee prep.</p>}</Fragment>
+    {kind==="mail" && <>
+      <div class="wc-evidence w-why-mail-thread">
+        <div class="wc-panel-head">Lee · Apartment handover</div>
+        <p>“Your lease is signed. Please send proof of tenant insurance before collecting the keys.”</p>
+      </div>
+      <div class="wc-draft w-mini-mail">
+        <div class="wc-draft-toolbar">To Lee · Draft generated automatically, not sent</div>
+        <p>Can I send the insurance certificate as a digital copy? Please confirm when you need it before I collect the keys.</p>
+      </div>
+    </>}
+    {kind==="network" && <>
+      <div class="wc-evidence w-why-person">
+        <div class="w-why-person-heading"><span aria-hidden="true">D</span><div><h4>Daniel</h4><p>Climate infrastructure investor</p></div></div>
+        <EvidenceRow title="How you know him" detail="Met at the energy transition dinner" icon="people"/>
+      </div>
+      <div class="wc-evidence"><EvidenceRow title="Check with Daniel first" detail="His previous emails suggest a check-in before an introduction." icon="mail"/></div>
+    </>}
+    {kind==="calendar" && <>
+      <div class="wc-evidence" aria-label="Investor calendar overview">
+        <EvidenceRow title="8 pitches already booked" detail="Monday–Wednesday · Founder meetings" icon="calendar"/>
+        <EvidenceRow title="Thursday · Read deck, then meet" detail="1:30–2 pm prep · 2–2:45 pm pitch · Suggested" icon="calendar"/>
+        <EvidenceRow title="Friday · Investment committee prep" detail="Keep the morning free for decision notes" icon="file"/>
+      </div>
+    </>}
+    {kind==="connections" && <>
+      <div class="wc-evidence w-why-connections" aria-label="Supported connection types">
+        {connections.map(connection=><div class="w-why-connection"><img src={`/wellington/connectors/${connection.asset}.svg`} alt="" width="30" height="30" loading="lazy"/><div><h4>{connection.name}</h4></div></div>)}
+      </div>
+    </>}
+  </ReplyCard>
+</div>

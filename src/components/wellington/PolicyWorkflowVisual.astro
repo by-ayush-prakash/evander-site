@@ -1,0 +1,197 @@
+<figure class="policy-workflow" aria-label="Illustrative file archive policy workflow">
+  <figcaption>Illustrative workflow</figcaption>
+  <ol>
+    <li class="draft">
+      <div class="workflow-node">
+        <header>
+          <img src="/wellington/connectors/google-drive.svg" alt="" width="20" height="20" />
+          <strong>Proposed archive</strong>
+        </header>
+        <p>An agent queued 40 closed project folders in Google Drive.</p>
+      </div>
+    </li>
+    <li class="check">
+      <div class="workflow-node">
+        <header>
+          <span class="workflow-mark"><img src="/wellington/mark.svg" alt="" width="20" height="20" /></span>
+          <strong>Archive policy</strong>
+        </header>
+        <p class="workflow-rule">Projects must be closed for <strong>at least 90 days</strong>. The weekly operations report still uses one folder.</p>
+      </div>
+    </li>
+    <li class="result">
+      <div class="workflow-node">
+        <header><strong>Archive batch filtered</strong></header>
+        <dl class="workflow-counts">
+          <div>
+            <dt>Eligible</dt>
+            <dd>35</dd>
+          </div>
+          <div>
+            <dt>Too recent</dt>
+            <dd>4</dd>
+          </div>
+          <div>
+            <dt>Held for review</dt>
+            <dd>1</dd>
+          </div>
+        </dl>
+        <p class="workflow-savings">The design evaluates the 90-day rule directly, without a model call.</p>
+      </div>
+    </li>
+  </ol>
+</figure>
+
+<style>
+  figcaption { color: #e0efea; font-size: 13px; margin-bottom: 16px; }
+  .policy-workflow {
+    --grid-line: #9fd4c31c;
+    --connection: #80b9aa;
+    margin: 0;
+    min-width: 0;
+    padding: clamp(20px, 4vw, 56px);
+    border-radius: var(--flow-frame);
+    background:
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) center / 44px 44px,
+      linear-gradient(var(--grid-line) 1px, transparent 1px) center / 44px 44px,
+      radial-gradient(ellipse at 90% 0%, #194b43, #112927 68%, #0e201f);
+    color: #19332f;
+  }
+
+  ol {
+    position: relative;
+    display: grid;
+    gap: 24px;
+    max-width: 480px;
+    margin: auto;
+    padding: 0;
+    list-style: none;
+    isolation: isolate;
+  }
+
+  ol::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 24px auto 24px 50%;
+    border-left: 1px solid var(--connection);
+  }
+
+  li {
+    position: relative;
+    display: grid;
+    width: 58%;
+  }
+
+  .check {
+    justify-self: end;
+  }
+
+  .workflow-node {
+    padding: 14px;
+    border: 1px solid #668b80;
+    border-radius: var(--flow-card);
+    background: #fff;
+    box-shadow: 0 5px 18px #071b1750;
+  }
+
+  .check .workflow-node {
+    border-color: #d7b778;
+  }
+
+  .result .workflow-node {
+    border-color: #91cdab;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: .875rem;
+    line-height: 1.35;
+  }
+
+  header img {
+    flex: none;
+    object-fit: contain;
+  }
+
+  .workflow-mark {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: var(--flow-icon);
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: #435b55;
+    font-size: .875rem;
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
+
+  .workflow-rule {
+    padding: 10px 12px;
+    border-radius: var(--flow-icon);
+    background: #eff5f2;
+  }
+
+  .workflow-rule strong {
+    color: #19332f;
+  }
+
+  .workflow-counts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 12px 0 0;
+    border-radius: var(--flow-icon);
+    background: #eff5f2;
+  }
+
+  .workflow-counts > div {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    padding: 9px 10px;
+  }
+
+  .workflow-counts > div + div {
+    border-left: 1px solid #d2e0d8;
+  }
+
+  .workflow-counts dt {
+    grid-row: 2;
+    color: #435b55;
+    font-size: .8125rem;
+    line-height: 1.3;
+  }
+
+  .workflow-counts dd {
+    margin: 0;
+    color: #19332f;
+    font-size: 1.375rem;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .workflow-savings {
+    color: #435b55;
+    font-size: .8125rem;
+  }
+
+  @media (max-width: 1000px) {
+    li {
+      width: 72%;
+    }
+  }
+
+  @media (max-width: 420px) {
+    li {
+      width: 86%;
+    }
+  }
+</style>

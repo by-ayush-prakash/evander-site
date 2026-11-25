@@ -1,0 +1,11 @@
+---
+const { markOnly = false } = Astro.props;
+---
+<span class:list={["w-brand", {"w-brand--mark":markOnly}]} aria-label="Wellington" role="img">
+  {!markOnly && <span class="w-brand-text" aria-hidden="true">Wellingt</span>}
+  <svg aria-hidden="true" viewBox="0 0 100 100" fill="none"><path d="M 65 20 A 35 35 0 1 0 82 37" stroke="currentColor" stroke-width={markOnly ? 12 : 14} stroke-linecap="butt"/><circle cx="74" cy="28" r="6.5" fill="#B7242B"/></svg>
+  {!markOnly && <span class="w-brand-text" aria-hidden="true">n</span>}
+</span>
+<style>
+.w-brand{display:inline-flex!important;align-items:baseline!important;white-space:nowrap;font-family:Arial,sans-serif!important;font-weight:600!important;letter-spacing:-.045em!important;gap:0!important;color:inherit!important;font-size:inherit!important;line-height:1.2!important}.w-brand .w-brand-text{padding:0!important;margin:0!important;border:0!important;font-family:Arial,Helvetica,sans-serif!important;font-weight:600!important;font-size:inherit!important;color:inherit!important;letter-spacing:inherit!important}.w-brand svg{display:inline-block;width:.64em;height:.64em;align-self:center;margin:0 .005em!important;flex-shrink:0;overflow:visible;transform:translateY(.075em)}.w-brand--mark svg{width:1.2em;height:1.2em;transform:none}
+</style>
