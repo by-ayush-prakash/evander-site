@@ -10,6 +10,9 @@
   width: 44px;
   height: 44px;
 }
+#site-header .evander-header-home img {
+  border-radius: 3%;
+}
 #site-header .nav-group {
   margin-inline-start: auto;
 }
