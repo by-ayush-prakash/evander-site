@@ -1,0 +1,26 @@
+#site-header .evander-header-home {
+  position: absolute;
+  inset: 0 auto 0 50%;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+}
+#site-header .evander-header-home a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+}
+#site-header .nav-group {
+  margin-inline-start: auto;
+}
+@media (641px <= width <= 800px) {
+  #site-header .top-nav {
+    gap: .5rem;
+  }
+}
+@media (641px <= width <= 800px) {
+  #site-header .top-nav a .typography {
+    font-size: 13px;
+  }
+}
