@@ -26,3 +26,13 @@
     font-size: 13px;
   }
 }
+
+:root {
+  --evander-footer-width: 660px;
+}
+footer#footer {
+  --footer-max-width: var(--evander-footer-width);
+}
+footer.site > .wrap {
+  max-width: calc(var(--evander-footer-width) + 2 * var(--gut));
+}
