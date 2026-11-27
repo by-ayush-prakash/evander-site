@@ -131,4 +131,37 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
 <h2 id="pilot">What the Wellington pilot would test</h2>
 <p>We plan to test the approach in one recurring workflow. The pilot would trace a downstream consequence, change a relevant workspace fact to see whether the decision changes, and test what happens when evidence is missing. We’d measure decision quality alongside the time people spend verifying and correcting the agent’s work.</p>
 <p><a href="/contact/">Become a design partner</a></p>
+<section class="architecture-faq" aria-labelledby="architecture-faq-title">
+  <h2 id="architecture-faq-title">FAQs</h2>
+  <details>
+    <summary>Where does Evander sit in an agent’s workflow?</summary>
+    <p>Evander is designed to evaluate a proposed tool call before the agent’s harness sends it to the tool. Only an allowed call proceeds.</p>
+  </details>
+  <details>
+    <summary>What does Evander check beyond permissions?</summary>
+    <p>Evander uses a model of the workspace to trace what a proposed action could affect. An agent might have permission to delete a spreadsheet, for example, even though the weekly operations report still relies on it.</p>
+  </details>
+  <details>
+    <summary>What happens when information is missing?</summary>
+    <p>Evander can only infer effects from the facts and relationships its workspace model represents. The design calls for sending a decision to the person responsible when relevant facts are missing or conflict.</p>
+  </details>
+  <details>
+    <summary>What will Wellington demonstrate?</summary>
+    <p>Wellington is the first planned demonstration of Evander. The pilot would test one recurring workflow and measure how much time people spend verifying and correcting the agent’s work. <a href="/wellington/">Explore Wellington</a>.</p>
+  </details>
+  <details>
+    <summary>How can my team get involved?</summary>
+    <p>If you have a recurring workflow you’d like to delegate, <a href="/contact/">contact us about becoming a design partner</a>.</p>
+  </details>
+</section>
+<style>
+.architecture-faq{margin:clamp(40px,7vw,80px) 0 0}
+#main .architecture-faq h2{text-align:center;margin:0 0 20px}
+.architecture-faq details+details{border-top:1px solid #dedfe1}
+.architecture-faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:14px 0;font:500 16px/1.4 var(--font-sans);list-style:none;cursor:pointer}
+.architecture-faq summary::-webkit-details-marker{display:none}
+.architecture-faq summary::after{content:"";flex:none;width:16px;height:16px;background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;color:#67696d}
+.architecture-faq details[open] summary::after{background-size:100% 1px,0 0}
+#main .architecture-faq details p{margin:0 0 16px;font:400 15px/1.55 var(--font-sans);color:#50545b}
+</style>
 </article></main><footer id="footer" data-spacing="default" data-astro-cid-jo6i4kqk><div class="footer-columns" data-astro-cid-jo6i4kqk><div class="footer-links" data-astro-cid-jo6i4kqk><div class="footer-column" data-astro-cid-jo6i4kqk><h4 data-astro-cid-jo6i4kqk>Product</h4><ul data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="/architecture/">Architecture</a></li><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="/wellington/">Wellington</a></li></ul></div><div class="footer-column" data-astro-cid-jo6i4kqk><h4 data-astro-cid-jo6i4kqk>Company</h4><ul data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="/team/">Team</a></li></ul></div><div class="footer-column" data-astro-cid-jo6i4kqk><h4 data-astro-cid-jo6i4kqk>Contact</h4><ul data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="https://innovatingfuture.com/contact/">Contact CIF</a></li></ul></div></div></div><div class="footer-copyright" data-astro-cid-jo6i4kqk>Evander © 2026</div></footer></div><script src="/evander-assets/assets/js/script.min.1712ae43e742485679939cffbdffac5f6725f5aa14b42cae3e3cb21e6579db58.js" integrity="sha256-FxKuQ+dCSFZ5k5z/vf+sX2cl9aoUtCyuPjyyHmV521g=" defer></script></body></html>
