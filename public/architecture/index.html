@@ -96,6 +96,38 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
 <h2 id="workspace-model">What the workspace model provides</h2>
 <p>The model describes kinds of actions and resources, what actions do to those resources, and how specific resources depend on each other. For example, the model can represent what deletion does to a file and separately represent that Monday’s operations report reads from a particular spreadsheet. The proposed system can combine those facts to identify the impact on the report without a rule written for that specific file.</p>
 <p>The system can only derive effects supported by the relationships and facts in its model. The quality and freshness of those facts matter.</p>
+<section class="architecture-capabilities" aria-labelledby="architecture-capabilities-title">
+  <div class="capability-symbol" aria-hidden="true"><span></span><span></span><span></span></div>
+  <h2 id="architecture-capabilities-title">Controls before an agent acts</h2>
+  <p class="capability-intro">What Evander is designed to do at the point of execution.</p>
+  <div class="capability-grid">
+    <div><h3>Interpret tool calls</h3><p>Identify the action, the agent taking it, and the resource it targets.</p></div>
+    <div><h3>Check delegated access</h3><p>Check the agent’s permissions before the call reaches the tool.</p></div>
+    <div><h3>Model the workspace</h3><p>Represent resources and the relationships between them, such as which reports rely on a file.</p></div>
+    <div><h3>Trace downstream effects</h3><p>Use those relationships to work out what else a proposed change could affect.</p></div>
+    <div><h3>Apply policy to effects</h3><p>Check the proposed action and its expected consequences against the same policy.</p></div>
+    <div><h3>Route decisions for review</h3><p>Allow, block, or pause an action for a person to decide. Missing or conflicting facts can also prompt review.</p></div>
+    <div><h3>Explain the decision</h3><p>Show why an action was stopped or flagged, including the dependency that triggered review.</p></div>
+    <div><h3>Record attempted actions</h3><p>Keep a record of the actions an agent attempts so the people responsible can review them.</p></div>
+  </div>
+</section>
+<style>
+.architecture-capabilities{position:relative;left:50%;translate:-50%;width:min(1000px,calc(100vw - 36px));margin:clamp(40px,7vw,84px) 0;font-family:var(--font-sans)}
+.capability-symbol{display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+.capability-symbol span{width:12px;height:12px;border-radius:50%;background:#314f84}
+.capability-symbol span+span{margin-left:28px;position:relative}
+.capability-symbol span+span::before{content:"";position:absolute;right:100%;top:5px;width:28px;height:2px;background:#8298c2}
+.capability-symbol span:last-child{background:#a77728}
+.capability-symbol span:last-child::before{background:#a77728}
+#main .architecture-capabilities h2{text-align:center;margin:0 0 8px}
+#main .architecture-capabilities .capability-intro{text-align:center;margin:0 0 28px;font:inherit;font-size:15px;color:#50545b}
+.capability-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#dedfe1;border-block:1px solid #dedfe1}
+.capability-grid>div{background:#fff;padding:clamp(14px,2vw,24px)}
+#main .capability-grid h3{font:500 16px/1.25 var(--font-sans);margin:0 0 8px}
+#main .capability-grid p{font:400 15px/1.5 var(--font-sans);color:#50545b;margin:0}
+@media(max-width:780px){.capability-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:400px){.capability-grid{grid-template-columns:minmax(0,1fr)}}
+</style>
 <h2 id="pilot">What the Wellington pilot would test</h2>
 <p>We plan to test the approach in one recurring workflow. The pilot would trace a downstream consequence, change a relevant workspace fact to see whether the decision changes, and test what happens when evidence is missing. We’d measure decision quality alongside the time people spend verifying and correcting the agent’s work.</p>
 <p><a href="/contact/">Become a design partner</a></p>
