@@ -140,9 +140,38 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
 <h2 id="workspace-model">What the workspace model provides</h2>
 <p>The model describes kinds of actions and resources, what actions do to those resources, and how specific resources depend on each other. For example, the model can represent what deletion does to a file and separately represent that Monday’s operations report reads from a particular spreadsheet. The proposed system can combine those facts to identify the impact on the report without a rule written for that specific file.</p>
 <p>The system can only derive effects supported by the relationships and facts in its model. The quality and freshness of those facts matter.</p>
+<section class="architecture-pilot" aria-labelledby="pilot">
 <h2 id="pilot">What the Wellington pilot would test</h2>
 <p>We plan to test the approach in one recurring workflow. The pilot would trace a downstream consequence, change a relevant workspace fact to see whether the decision changes, and test what happens when evidence is missing. We’d measure decision quality alongside the time people spend verifying and correcting the agent’s work.</p>
 <p><a href="/contact/">Become a design partner</a></p>
+</section>
+<style>
+@media(prefers-reduced-motion:no-preference){
+  .pilot-reveal{opacity:0;transform:translateY(14px);transition:opacity .46s ease,transform .46s cubic-bezier(.22,1,.36,1)}
+  .pilot-reveal.is-visible{opacity:1;transform:none}
+  .architecture-faq summary::after{transition:background-size .24s ease}
+  @supports (interpolate-size:allow-keywords) and selector(details::details-content){
+    .architecture-faq details{interpolate-size:allow-keywords}
+    .architecture-faq details::details-content{block-size:0;opacity:0;overflow:clip;transition:block-size .32s cubic-bezier(.22,1,.36,1),opacity .24s ease,content-visibility .32s allow-discrete}
+    .architecture-faq details[open]::details-content{block-size:auto;opacity:1}
+  }
+}
+</style>
+<script>
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  const pilot = document.querySelector('.architecture-pilot');
+  if (pilot.getBoundingClientRect().top < innerHeight) return;
+  pilot.classList.add('pilot-reveal');
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    pilot.classList.add('is-visible');
+    observer.disconnect();
+  }, {threshold: 0.08});
+  observer.observe(pilot);
+})();
+</script>
+
 <section class="architecture-faq" aria-labelledby="architecture-faq-title">
   <h2 id="architecture-faq-title">FAQs</h2>
   <details>
