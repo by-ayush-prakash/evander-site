@@ -36,3 +36,10 @@ footer#footer {
 footer.site > .wrap {
   max-width: calc(var(--evander-footer-width) + 2 * var(--gut));
 }
+
+@media (min-width: 500px) {
+  footer#footer .footer-links {
+    grid-template-columns: repeat(3, max-content);
+    justify-content: space-between;
+  }
+}
