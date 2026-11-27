@@ -13,6 +13,79 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
 </style><link rel="canonical" href="https://evander.life/architecture/"></head><body><div id="wrapper"><header id="header" data-astro-cid-nen7h5rs><site-navigation data-astro-cid-nen7h5rs="true"><div id="site-header" class="site-header" data-astro-cid-nen7h5rs><div class="navbar-spacer" data-astro-cid-nen7h5rs></div><div class="navbar-logo navbar-logo-home" aria-hidden="true" data-astro-cid-nen7h5rs><a href="/" data-astro-cid-nen7h5rs aria-label="Evander home"><img src="/evander-assets/images/evander-e.png" alt="" width="24" height="24" style="display:block;width:24px;height:auto"></a></div><!-- Navigation group on the right --><div class="nav-group" data-astro-cid-nen7h5rs><nav class="top-nav" data-astro-cid-nen7h5rs><a href="/architecture/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-legacy" data-astro-cid-xetarl6n="true" class="typography">Architecture</span></a><a href="/wellington/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-legacy" data-astro-cid-xetarl6n="true" class="typography">Wellington</span></a><a href="/team/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-legacy" data-astro-cid-xetarl6n="true" class="typography">Team</span></a><a href="/contact/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-legacy" data-astro-cid-xetarl6n="true" class="typography">Contact</span></a></nav><button id="menu-toggle" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs></span><span data-astro-cid-nen7h5rs></span><span data-astro-cid-nen7h5rs></span></button></div></div><div id="mobile-menu" class="mobile-menu-overlay" aria-hidden="true" hidden data-astro-cid-nen7h5rs><nav class="mobile-menu-nav" role="navigation" aria-label="Mobile" data-astro-cid-nen7h5rs><a href="/architecture/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-large" data-astro-cid-xetarl6n="true" class="typography">Architecture</span></a><a href="/wellington/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-large" data-astro-cid-xetarl6n="true" class="typography">Wellington</span></a><a href="/team/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-large" data-astro-cid-xetarl6n="true" class="typography">Team</span></a><a href="/contact/" data-astro-cid-nen7h5rs><span data-astro-cid-nen7h5rs="true" data-typography="body-large" data-astro-cid-xetarl6n="true" class="typography">Contact</span></a></nav></div><div role="banner" class="logo-container" data-astro-cid-nen7h5rs><img src="/evander-assets/images/architecture-workflow.png" alt="Evander holds an agent’s request to delete a production database for review. The action is blocked because the database serves live customers." width="1008" height="1038" style="display:block;width:min(100%,460px);height:auto;margin-inline:auto"></div></site-navigation></header><script type="module" src="/evander-assets/_astro/Header.astro_astro_type_script_index_0_lang.CJAHQKSQ.js"></script><main id="main" class="index content"><article class="content">
 <h2>Evander architecture</h2>
 <p>The Evander governance harness is designed to evaluate a proposed tool call before the agent’s harness executes it. It checks whether the action is permitted and derives possible downstream effects from a model of the workspace.</p>
+<section class="action-trace" aria-labelledby="action-trace-title">
+  <h2 id="action-trace-title">How Evander evaluates an action</h2>
+  <div class="trace-controls" role="group" aria-label="Walkthrough steps">
+    <button type="button" aria-pressed="true" data-step="0">1. Check access</button>
+    <button type="button" aria-pressed="false" data-step="1">2. Trace effects</button>
+    <button type="button" aria-pressed="false" data-step="2">3. Decide</button>
+  </div>
+  <div class="trace-map" data-current="0">
+    <div class="trace-node" data-node="0"><span>Wellington proposes</span><strong>Delete spreadsheet</strong></div>
+    <div class="trace-wire" data-wire="0" aria-hidden="true"></div>
+    <div class="trace-node" data-node="1"><span>Evander checks</span><strong>Permission granted</strong></div>
+    <div class="trace-wire" data-wire="1" aria-hidden="true"></div>
+    <div class="trace-node" data-node="2"><span>Workspace dependency</span><strong>Monday’s report</strong></div>
+    <div class="trace-wire" data-wire="2" aria-hidden="true"></div>
+    <div class="trace-node" data-node="3"><span>Evander’s decision</span><strong>Send for review</strong></div>
+  </div>
+  <div class="trace-footer">
+    <p aria-live="polite">Wellington has permission to delete the spreadsheet. Evander checks what depends on it before the call runs.</p>
+    <button type="button" class="trace-next">Next step <span aria-hidden="true">→</span></button>
+  </div>
+</section>
+<style>
+.action-trace{--trace-ink:#314f84;--trace-line:#d8dadd;position:relative;left:50%;translate:-50%;width:min(1000px,calc(100vw - 36px));margin:clamp(36px,7vw,80px) 0;font-family:var(--font-sans)}
+#main .action-trace h2{text-align:center;margin:0 0 20px}
+.trace-controls{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.action-trace button{background:#fff;border:1px solid transparent;border-radius:5px;color:inherit;font:inherit;font-size:14px;padding:9px 12px;cursor:pointer}
+.action-trace button:hover{border-color:var(--trace-line)}
+.trace-controls button[aria-pressed=true]{background:#eef2fa;color:#243e70}
+.trace-map{display:grid;grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr) 24px minmax(0,1fr) 24px minmax(0,1fr);align-items:center;padding:clamp(18px,4vw,44px);border:1px solid var(--trace-line);border-radius:8px;background:#fff}
+.trace-node{min-width:0;padding:12px;border:1px solid var(--trace-line);border-radius:5px;background:#fff;transition:background .25s,border-color .25s}
+.trace-node span,.trace-node strong{display:block;line-height:1.3}
+.trace-node span{color:#555c68;font-size:12px;margin-bottom:6px}
+.trace-node strong{font-size:15px;font-weight:500}
+.trace-node.is-reached,.trace-map[data-current="0"] [data-node="1"]{border-color:#8298c2;background:#f1f5fc}
+.trace-node[data-node="3"].is-reached{border-color:#b98b3e;background:#fff1d4}
+.trace-wire{height:2px;background:var(--trace-line);position:relative}
+.trace-wire::after{content:"";position:absolute;inset:0;background:var(--trace-ink);transform:scaleX(0);transform-origin:left;transition:transform .38s ease}
+.trace-wire.is-reached::after,.trace-map[data-current="0"] [data-wire="0"]::after{transform:scaleX(1)}
+.trace-wire[data-wire="2"]::after{background:#a77728}
+.trace-footer{display:flex;align-items:baseline;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;padding:12px 0}
+#main .trace-footer p{flex:1 1 320px;margin:0;font:inherit;font-size:15px;color:#50545b}
+.action-trace .trace-next{border-color:var(--trace-line);white-space:nowrap}
+@media(max-width:670px){.trace-map{grid-template-columns:minmax(0,1fr)}.trace-wire{width:2px;height:16px;margin-left:20px}.trace-wire::after{transform:scaleY(0);transform-origin:top}.trace-wire.is-reached::after,.trace-map[data-current="0"] [data-wire="0"]::after{transform:scaleY(1)}}
+@media(prefers-reduced-motion:reduce){.trace-node,.trace-wire::after{transition:none}}
+</style>
+<script>
+(() => {
+  const section = document.querySelector('.action-trace');
+  const map = section.querySelector('.trace-map');
+  const controls = [...section.querySelectorAll('[data-step]')];
+  const nodes = [...map.querySelectorAll('[data-node]')];
+  const wires = [...map.querySelectorAll('[data-wire]')];
+  const caption = section.querySelector('[aria-live]');
+  const next = section.querySelector('.trace-next');
+  const explanations = [
+    'Wellington has permission to delete the spreadsheet. Evander checks what depends on it before the call runs.',
+    'The workspace model connects the spreadsheet to Monday’s operations report. Deleting the file could stop the report from running.',
+    'Evander would pause the call and show the person responsible why Monday’s report is at risk.'
+  ];
+  let current = 0;
+  function show(step) {
+    current = step;
+    map.dataset.current = step;
+    controls.forEach((button, index) => button.setAttribute('aria-pressed', index === step));
+    nodes.forEach((node, index) => node.classList.toggle('is-reached', index > 0 && index <= step + 1));
+    wires.forEach((wire, index) => wire.classList.toggle('is-reached', index <= step));
+    caption.textContent = explanations[step];
+    next.firstChild.textContent = step === explanations.length - 1 ? 'Start again ' : 'Next step ';
+  }
+  controls.forEach((button, index) => button.addEventListener('click', () => show(index)));
+  next.addEventListener('click', () => show((current + 1) % explanations.length));
+})();
+</script>
 <h2>From tool call to decision</h2>
 <ol>
 <li><strong>Interpret the call.</strong> Identify the action, who is taking it, and the resource it targets.</li>
