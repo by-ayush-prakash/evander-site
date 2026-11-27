@@ -175,24 +175,40 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
 <section class="architecture-faq" aria-labelledby="architecture-faq-title">
   <h2 id="architecture-faq-title">FAQs</h2>
   <details>
+    <summary>What problem is Evander built to solve?</summary>
+    <p>A team can give an agent permission to update a workspace and still spend hours checking the changes. Evander is designed to catch consequential actions before they run, so people can focus their review on the decisions that need them.</p>
+  </details>
+  <details>
     <summary>Where does Evander sit in an agent’s workflow?</summary>
-    <p>Evander is designed to evaluate a proposed tool call before the agent’s harness sends it to the tool. Only an allowed call proceeds.</p>
+    <p>Evander is designed to evaluate a proposed tool call after the agent chooses an action and before its harness sends the call to the tool. The harness needs to honor the decision. An allowed call can proceed, a blocked call stops, and a call sent for review stays paused.</p>
   </details>
   <details>
-    <summary>What does Evander check beyond permissions?</summary>
-    <p>Evander uses a model of the workspace to trace what a proposed action could affect. An agent might have permission to delete a spreadsheet, for example, even though the weekly operations report still relies on it.</p>
+    <summary>Why aren’t tool permissions enough?</summary>
+    <p>Permissions can tell you whether an agent is allowed to delete a spreadsheet. They may say nothing about the weekly report that depends on it. Evander’s design checks both the agent’s authority and what the proposed change could affect.</p>
   </details>
   <details>
-    <summary>What happens when information is missing?</summary>
-    <p>Evander can only infer effects from the facts and relationships its workspace model represents. The design calls for sending a decision to the person responsible when relevant facts are missing or conflict.</p>
+    <summary>How does Evander work out what an action could affect?</summary>
+    <p>The design identifies the actor, action, and target from the proposed call. It then follows known relationships in a model of the workspace, such as which report reads from a spreadsheet, and evaluates those effects against policy.</p>
   </details>
   <details>
-    <summary>What will Wellington demonstrate?</summary>
-    <p>Wellington is the first planned demonstration of Evander. The pilot would test one recurring workflow and measure how much time people spend verifying and correcting the agent’s work. <a href="/wellington/">Explore Wellington</a>.</p>
+    <summary>What happens when the workspace model is incomplete?</summary>
+    <p>Evander can reason from the facts and relationships it has. When a fact needed for a decision is missing or conflicts with other evidence, the design calls for pausing the action and showing the reviewer what information is missing or disputed.</p>
   </details>
   <details>
-    <summary>How can my team get involved?</summary>
-    <p>If you have a recurring workflow you’d like to delegate, <a href="/contact/">contact us about becoming a design partner</a>.</p>
+    <summary>What would it take to use Evander with our agent?</summary>
+    <p>An integration would need a way to intercept proposed tool calls and enough workspace context to judge their effects. Evander is in pre-alpha. Wellington is the first planned integration.</p>
+  </details>
+  <details>
+    <summary>What will the Wellington pilot measure?</summary>
+    <p>The planned pilot will focus on one recurring workflow. It will test whether Evander catches downstream effects before execution, whether the decision changes when a relevant workspace fact changes, and how much time people spend verifying and correcting the agent’s work. <a href="/wellington/">Explore Wellington</a>.</p>
+  </details>
+  <details>
+    <summary>What would pre-seed funding support?</summary>
+    <p>Evander is seeking US$1 million to build the first working integration with Wellington and run a customer pilot over 12 months. The pilot is intended to establish whether the approach improves decisions and reduces the time people spend reviewing the agent’s work. <a href="/contact/">Talk to the founders</a>.</p>
+  </details>
+  <details>
+    <summary>What makes a good design partner?</summary>
+    <p>A good starting point is a recurring workflow you already review manually, with an identifiable person who owns the outcome. <a href="/contact/">Tell us about the workflow</a>, which tools it touches, and which step takes the most checking.</p>
   </details>
 </section>
 <style>
