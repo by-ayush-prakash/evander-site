@@ -29,7 +29,7 @@
 
 :root {
   --evander-accent: #93cbaa;
-  --evander-accent-ink: #1b3127;
+  --evander-accent-ink: #fff;
   --evander-footer-width: 660px;
 }
 footer#footer {
