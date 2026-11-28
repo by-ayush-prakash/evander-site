@@ -54,7 +54,7 @@
   --action-padding:24px;
   --action-gap:12px;
   --action-radius:var(--r);
-  --butter:#F4EA96;
+  --butter:var(--evander-accent,#93cbaa);
   --action-background:var(--butter);
   --action-foreground:var(--ink);
   --action-hover:#E9DB75;
