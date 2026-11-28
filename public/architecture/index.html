@@ -150,11 +150,6 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
   .pilot-reveal{opacity:0;transform:translateY(14px);transition:opacity .46s ease,transform .46s cubic-bezier(.22,1,.36,1)}
   .pilot-reveal.is-visible{opacity:1;transform:none}
   .architecture-faq summary::after{transition:background-size .24s ease}
-  @supports (interpolate-size:allow-keywords) and selector(details::details-content){
-    .architecture-faq details{interpolate-size:allow-keywords}
-    .architecture-faq details::details-content{block-size:0;opacity:0;overflow:clip;transition:block-size .32s cubic-bezier(.22,1,.36,1),opacity .24s ease,content-visibility .32s allow-discrete}
-    .architecture-faq details[open]::details-content{block-size:auto;opacity:1}
-  }
 }
 </style>
 <script>
@@ -176,41 +171,75 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
   <h2 id="architecture-faq-title">FAQs</h2>
   <details>
     <summary>What problem is Evander built to solve?</summary>
-    <p>A team can give an agent permission to update a workspace and still spend hours checking the changes. Evander is designed to catch consequential actions before they run, so people can focus their review on the decisions that need them.</p>
+    <div class="faq-answer"><p>A team can give an agent permission to update a workspace and still spend hours checking the changes. Evander is designed to catch consequential actions before they run, so people can focus their review on the decisions that need them.</p></div>
   </details>
   <details>
     <summary>Where does Evander sit in an agent’s workflow?</summary>
-    <p>Evander is designed to evaluate a proposed tool call after the agent chooses an action and before its harness sends the call to the tool. The harness needs to honor the decision. An allowed call can proceed, a blocked call stops, and a call sent for review stays paused.</p>
+    <div class="faq-answer"><p>Evander is designed to evaluate a proposed tool call after the agent chooses an action and before its harness sends the call to the tool. The harness needs to honor the decision. An allowed call can proceed, a blocked call stops, and a call sent for review stays paused.</p></div>
   </details>
   <details>
     <summary>Why aren’t tool permissions enough?</summary>
-    <p>Permissions can tell you whether an agent is allowed to delete a spreadsheet. They may say nothing about the weekly report that depends on it. Evander’s design checks both the agent’s authority and what the proposed change could affect.</p>
+    <div class="faq-answer"><p>Permissions can tell you whether an agent is allowed to delete a spreadsheet. They may say nothing about the weekly report that depends on it. Evander’s design checks both the agent’s authority and what the proposed change could affect.</p></div>
   </details>
   <details>
     <summary>How does Evander work out what an action could affect?</summary>
-    <p>The design identifies the actor, action, and target from the proposed call. It then follows known relationships in a model of the workspace, such as which report reads from a spreadsheet, and evaluates those effects against policy.</p>
+    <div class="faq-answer"><p>The design identifies the actor, action, and target from the proposed call. It then follows known relationships in a model of the workspace, such as which report reads from a spreadsheet, and evaluates those effects against policy.</p></div>
   </details>
   <details>
     <summary>What happens when the workspace model is incomplete?</summary>
-    <p>Evander can reason from the facts and relationships it has. When a fact needed for a decision is missing or conflicts with other evidence, the design calls for pausing the action and showing the reviewer what information is missing or disputed.</p>
+    <div class="faq-answer"><p>Evander can reason from the facts and relationships it has. When a fact needed for a decision is missing or conflicts with other evidence, the design calls for pausing the action and showing the reviewer what information is missing or disputed.</p></div>
   </details>
   <details>
     <summary>What would it take to use Evander with our agent?</summary>
-    <p>An integration would need a way to intercept proposed tool calls and enough workspace context to judge their effects. Evander is in pre-alpha. Wellington is the first planned integration.</p>
+    <div class="faq-answer"><p>An integration would need a way to intercept proposed tool calls and enough workspace context to judge their effects. Evander is in pre-alpha. Wellington is the first planned integration.</p></div>
   </details>
   <details>
     <summary>What will the Wellington pilot measure?</summary>
-    <p>The planned pilot will focus on one recurring workflow. It will test whether Evander catches downstream effects before execution, whether the decision changes when a relevant workspace fact changes, and how much time people spend verifying and correcting the agent’s work. <a href="/wellington/">Explore Wellington</a>.</p>
+    <div class="faq-answer"><p>The planned pilot will focus on one recurring workflow. It will test whether Evander catches downstream effects before execution, whether the decision changes when a relevant workspace fact changes, and how much time people spend verifying and correcting the agent’s work. <a href="/wellington/">Explore Wellington</a>.</p></div>
   </details>
   <details>
     <summary>What would pre-seed funding support?</summary>
-    <p>Evander is seeking US$1 million to build the first working integration with Wellington and run a customer pilot over 12 months. The pilot is intended to establish whether the approach improves decisions and reduces the time people spend reviewing the agent’s work. <a href="/contact/">Talk to the founders</a>.</p>
+    <div class="faq-answer"><p>Evander is seeking US$1 million to build the first working integration with Wellington and run a customer pilot over 12 months. The pilot is intended to establish whether the approach improves decisions and reduces the time people spend reviewing the agent’s work. <a href="/contact/">Talk to the founders</a>.</p></div>
   </details>
   <details>
     <summary>What makes a good design partner?</summary>
-    <p>A good starting point is a recurring workflow you already review manually, with an identifiable person who owns the outcome. <a href="/contact/">Tell us about the workflow</a>, which tools it touches, and which step takes the most checking.</p>
+    <div class="faq-answer"><p>A good starting point is a recurring workflow you already review manually, with an identifiable person who owns the outcome. <a href="/contact/">Tell us about the workflow</a>, which tools it touches, and which step takes the most checking.</p></div>
   </details>
 </section>
+<script>
+  (() => {
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    for (const item of document.querySelectorAll('.architecture-faq details')) {
+      const summary = item.querySelector('summary');
+      const answer = item.querySelector('.faq-answer');
+      if (!answer.animate) continue;
+
+      let motion;
+      summary.addEventListener('click', event => {
+        if (reducedMotion.matches && !motion) return;
+        event.preventDefault();
+
+        const opening = !item.open || item.hasAttribute('data-closing');
+        const height = item.open ? answer.getBoundingClientRect().height : 0;
+        const opacity = item.open ? getComputedStyle(answer).opacity : 0;
+        motion?.cancel();
+        item.open = true;
+        item.toggleAttribute('data-closing', !opening);
+
+        motion = answer.animate([
+          { height: height + 'px', opacity },
+          { height: (opening ? answer.getBoundingClientRect().height : 0) + 'px', opacity: opening ? 1 : 0 }
+        ], { duration: reducedMotion.matches ? 0 : 320, easing: 'cubic-bezier(.22,1,.36,1)' });
+        motion.onfinish = () => {
+          item.open = opening;
+          item.removeAttribute('data-closing');
+          motion = undefined;
+        };
+      });
+    }
+  })();
+</script>
+
 <style>
 .architecture-faq{margin:clamp(40px,7vw,80px) 0 0}
 #main .architecture-faq h2{text-align:center;margin:0 0 20px}
@@ -218,7 +247,8 @@ summary[data-astro-cid-ekguhzzh].btn{list-style:none}summary[data-astro-cid-ekgu
 .architecture-faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:14px 0;font:500 16px/1.4 var(--font-sans);list-style:none;cursor:pointer}
 .architecture-faq summary::-webkit-details-marker{display:none}
 .architecture-faq summary::after{content:"";flex:none;width:16px;height:16px;background:linear-gradient(currentColor,currentColor) center/100% 1px no-repeat,linear-gradient(currentColor,currentColor) center/1px 100% no-repeat;color:#67696d}
-.architecture-faq details[open] summary::after{background-size:100% 1px,0 0}
+.architecture-faq details[open]:not([data-closing]) summary::after{background-size:100% 1px,0 0}
+.architecture-faq .faq-answer{overflow:hidden}
 #main .architecture-faq details p{margin:0 0 16px;font:400 15px/1.55 var(--font-sans);color:#50545b}
 </style>
 </article></main><footer id="footer" data-spacing="default" data-astro-cid-jo6i4kqk><div class="footer-columns" data-astro-cid-jo6i4kqk><div class="footer-links" data-astro-cid-jo6i4kqk><div class="footer-column" data-astro-cid-jo6i4kqk><h4 data-astro-cid-jo6i4kqk>Product</h4><ul data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="/architecture/">Architecture</a></li><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="/wellington/">Wellington</a></li></ul></div><div class="footer-column" data-astro-cid-jo6i4kqk><h4 data-astro-cid-jo6i4kqk>Company</h4><ul data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="/team/">Team</a></li></ul></div><div class="footer-column" data-astro-cid-jo6i4kqk><h4 data-astro-cid-jo6i4kqk>Contact</h4><ul data-astro-cid-jo6i4kqk><li data-astro-cid-jo6i4kqk><a data-astro-cid-jo6i4kqk href="/contact/">Contact Evander</a></li></ul></div></div></div><div class="footer-copyright" data-astro-cid-jo6i4kqk>Evander © 2026</div></footer></div><script src="/evander-assets/assets/js/script.min.1712ae43e742485679939cffbdffac5f6725f5aa14b42cae3e3cb21e6579db58.js" integrity="sha256-FxKuQ+dCSFZ5k5z/vf+sX2cl9aoUtCyuPjyyHmV521g=" defer></script></body></html>
